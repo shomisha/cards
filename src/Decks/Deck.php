@@ -43,7 +43,7 @@ class Deck implements DeckContract
     {
         $card = $this->cards[$position] ?? null;
 
-        unserialize($this->cards[$position]);
+        array_splice($this->cards, $position, 1);
 
         return $card;
     }
