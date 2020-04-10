@@ -12,9 +12,20 @@
     "require": {
         "php": "^7.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.1"
+    },
     "autoload": {
         "psr-4": {
             "Shomisha\\Cards\\": "src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Shomisha\\Cards\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --config tests/phpunit.xml"
     }
 }
