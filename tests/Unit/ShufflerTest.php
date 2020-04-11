@@ -4,7 +4,7 @@ namespace Shomisha\Cards\Tests\Unit;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
-use Shomisha\Cards\Builders\Builder;
+use Shomisha\Cards\DeckBuilders\DeckBuilder;
 use Shomisha\Cards\Shufflers\Shuffler;
 
 class ShufflerTest extends TestCase
@@ -15,7 +15,7 @@ class ShufflerTest extends TestCase
     public function shuffler_can_shuffle_decks()
     {
         $shuffler = new Shuffler();
-        $deck = (new Builder())->build();
+        $deck = (new DeckBuilder())->build();
         $oldCards = $deck->cards();
         $this->assertEquals($oldCards, $deck->cards());
 
@@ -34,7 +34,7 @@ class ShufflerTest extends TestCase
      */
     public function shuffler_can_perform_multiple_rounds_of_shuffling($rounds)
     {
-        $deck = (new Builder())->build();
+        $deck = (new DeckBuilder())->build();
         $mock = \Mockery::mock(sprintf('%s[performShuffle]', Shuffler::class));
         $mock->shouldAllowMockingProtectedMethods();
         $expectation = $mock->shouldReceive('performShuffle')->times($rounds);

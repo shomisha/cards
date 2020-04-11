@@ -3,7 +3,7 @@
 namespace Shomisha\Cards\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Shomisha\Cards\Builders\Builder;
+use Shomisha\Cards\DeckBuilders\DeckBuilder;
 use Shomisha\Cards\Decks\Deck;
 
 class BuilderTest extends TestCase
@@ -11,7 +11,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function builder_can_build_a_deck()
     {
-        $builder = new Builder();
+        $builder = new DeckBuilder();
 
         $deck = $builder->build();
 
@@ -39,7 +39,7 @@ class BuilderTest extends TestCase
                 "{$suite}-14",
             ]);
         }
-        $builder = new Builder();
+        $builder = new DeckBuilder();
 
 
         $deck = $builder->build();

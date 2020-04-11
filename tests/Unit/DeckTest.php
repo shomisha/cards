@@ -3,21 +3,21 @@
 namespace Shomisha\Cards\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Shomisha\Cards\Builders\Builder;
+use Shomisha\Cards\DeckBuilders\DeckBuilder;
 use Shomisha\Cards\Cards\Card;
 use Shomisha\Cards\Decks\Deck;
 use Shomisha\Cards\Suites\Suite;
 
 class DeckTest extends TestCase
 {
-    /** @var \Shomisha\Cards\Contracts\Builder */
+    /** @var \Shomisha\Cards\Contracts\DeckBuilder */
     protected $builder;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->builder = new Builder();
+        $this->builder = new DeckBuilder();
     }
 
     /** @test */

@@ -1,14 +1,14 @@
 <?php
 
-namespace Shomisha\Cards\Builders;
+namespace Shomisha\Cards\DeckBuilders;
 
 use Shomisha\Cards\Cards\Card;
-use Shomisha\Cards\Contracts\Builder as BuilderContract;
+use Shomisha\Cards\Contracts\DeckBuilder as BuilderContract;
 use Shomisha\Cards\Contracts\Deck as DeckContract;
 use Shomisha\Cards\Decks\Deck;
 use Shomisha\Cards\Suites\Suite;
 
-class Builder implements BuilderContract
+class DeckBuilder implements BuilderContract
 {
     public function build(): DeckContract
     {

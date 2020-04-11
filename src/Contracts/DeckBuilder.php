@@ -2,7 +2,7 @@
 
 namespace Shomisha\Cards\Contracts;
 
-interface Builder
+interface DeckBuilder
 {
     /**
      * Build a deck.
