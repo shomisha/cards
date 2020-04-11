@@ -20,7 +20,7 @@ class Deck implements DeckContract
         return $this->cards;
     }
 
-    public function draw(): Card
+    public function draw(): ?Card
     {
         return array_shift($this->cards);
     }
@@ -39,7 +39,7 @@ class Deck implements DeckContract
         return $this;
     }
 
-    public function take(int $position): Card
+    public function take(int $position): ?Card
     {
         $card = $this->cards[$position] ?? null;
 

@@ -18,7 +18,7 @@ interface Deck
      *
      * @return \Shomisha\Cards\Contracts\Card
      */
-    public function draw(): Card;
+    public function draw(): ?Card;
 
     /**
      * Puts a card on top of the deck stack.
@@ -44,5 +44,5 @@ interface Deck
      * @param int $position
      * @return \Shomisha\Cards\Contracts\Card
      */
-    public function take(int $position): Card;
+    public function take(int $position): ?Card;
 }
