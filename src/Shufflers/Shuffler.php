@@ -16,7 +16,7 @@ class Shuffler implements ShufflerContract
         }
 
         for ($i = 0; $i < $rounds; $i++) {
-            shuffle($cards);
+            $this->performShuffle($cards);
         }
 
         foreach ($cards as $card) {
@@ -24,5 +24,10 @@ class Shuffler implements ShufflerContract
         }
         
         return $deck;
+    }
+
+    protected function performShuffle(array $cards)
+    {
+        shuffle($cards);
     }
 }
