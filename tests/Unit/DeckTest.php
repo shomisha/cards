@@ -5,6 +5,7 @@ namespace Shomisha\Cards\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Builders\Builder;
 use Shomisha\Cards\Cards\Card;
+use Shomisha\Cards\Decks\Deck;
 use Shomisha\Cards\Suites\Suite;
 
 class DeckTest extends TestCase
@@ -53,6 +54,18 @@ class DeckTest extends TestCase
     }
 
     /** @test */
+    public function draw_will_return_null_if_no_cards_are_available()
+    {
+        $deck = new Deck([]);
+
+
+        $drawn = $deck->draw();
+
+
+        $this->assertNull($drawn);
+    }
+
+    /** @test */
     public function deck_can_place_a_card_on_top_of_the_stack()
     {
         $deck = $this->builder->build();
@@ -88,6 +101,18 @@ class DeckTest extends TestCase
         foreach ($deck->cards() as $card) {
             $this->assertNotEquals($takenCard->identifier(), $card->identifier());
         }
+    }
+
+    /** @test */
+    public function take_will_return_null_if_the_requested_card_is_not_available()
+    {
+        $deck = $this->builder->build();
+
+
+        $taken = $deck->take(55);
+
+
+        $this->assertNull($taken);
     }
 
     /**
