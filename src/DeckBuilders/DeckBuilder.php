@@ -3,6 +3,7 @@
 namespace Shomisha\Cards\DeckBuilders;
 
 use Shomisha\Cards\Cards\Card;
+use Shomisha\Cards\Cards\Joker;
 use Shomisha\Cards\Contracts\DeckBuilder as BuilderContract;
 use Shomisha\Cards\Contracts\Deck as DeckContract;
 use Shomisha\Cards\Decks\Deck;
@@ -10,6 +11,18 @@ use Shomisha\Cards\Suites\Suite;
 
 class DeckBuilder implements BuilderContract
 {
+    /** @var bool  */
+    private $withJokers = true;
+
+    public function withJokers(bool $withJokers = true): DeckBuilder
+    {
+        $builder = clone $this;
+
+        $builder->withJokers = $withJokers;
+
+        return $builder;
+    }
+
     public function build(): DeckContract
     {
         return new Deck($this->getCards());
@@ -28,6 +41,13 @@ class DeckBuilder implements BuilderContract
             foreach (Card::RANKS as $value => $rank) {
                 $cards[] = new Card($suite, $value);
             }
+        }
+
+        if ($this->withJokers) {
+            $cards = array_merge($cards, [
+                new Joker(),
+                new Joker(),
+            ]);
         }
 
         return $cards;
