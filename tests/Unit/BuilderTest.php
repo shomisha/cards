@@ -3,6 +3,7 @@
 namespace Shomisha\Cards\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use Shomisha\Cards\Cards\Joker;
 use Shomisha\Cards\DeckBuilders\DeckBuilder;
 use Shomisha\Cards\Decks\Deck;
 
@@ -39,6 +40,11 @@ class BuilderTest extends TestCase
                 "{$suite}-14",
             ]);
         }
+        $expectedCards = array_merge($expectedCards, [
+            'joker',
+            'joker',
+        ]);
+
         $builder = new DeckBuilder();
 
 
@@ -66,7 +72,7 @@ class BuilderTest extends TestCase
         $multiDeck = $builder->buildMultiple($count);
 
 
-        $this->assertCount(52 * $count, $multiDeck->cards());
+        $this->assertCount(54 * $count, $multiDeck->cards());
     }
 
     /** @test */
@@ -80,12 +86,20 @@ class BuilderTest extends TestCase
 
         $cards = $multiDeck->cards();
         $groupedByIdentifier = [];
+        $jokers = 0;
         foreach ($cards as $card) {
+            if ($card instanceof Joker) {
+                $jokers++;
+
+                continue;
+            }
+
             $groupedByIdentifier[$card->identifier()][] = $card;
         }
         
         foreach ($groupedByIdentifier as $group) {
             $this->assertCount(3, $group);
         }
+        $this->assertEquals(6, $jokers);
     }
 }

@@ -27,7 +27,7 @@ class DeckTest extends TestCase
 
         $cards = $deck->cards();
 
-        $this->assertCount(52, $cards);
+        $this->assertCount(54, $cards);
         $this->assertInstanceOf(Card::class, $cards[0]);
 
         // Assert that the cards will remain in the deck
@@ -39,14 +39,14 @@ class DeckTest extends TestCase
     {
         $deck = $this->builder->build();
         $expectedCard = $deck->cards()[0];
-        $this->assertCount(52, $deck->cards());
+        $this->assertCount(54, $deck->cards());
 
 
         $actualCard = $deck->draw();
 
 
         $this->assertEquals($expectedCard->identifier(), $actualCard->identifier());
-        $this->assertCount(51, $deck->cards());
+        $this->assertCount(53, $deck->cards());
         $this->assertNotEquals($expectedCard->identifier(), $deck->cards()[0]);
         foreach ($deck->cards() as $card) {
             $this->assertNotEquals($expectedCard->identifier(), $card->identifier());
@@ -70,13 +70,13 @@ class DeckTest extends TestCase
     {
         $deck = $this->builder->build();
         $newCard = new Card(Suite::SPADES(), 10);
-        $this->assertCount(52, $deck->cards());
+        $this->assertCount(54, $deck->cards());
 
 
         $deck->place($newCard);
 
 
-        $this->assertCount(53, $deck->cards());
+        $this->assertCount(55, $deck->cards());
         $this->assertEquals($newCard->identifier(), $deck->cards()[0]->identifier());
     }
 
@@ -90,13 +90,13 @@ class DeckTest extends TestCase
     public function deck_can_take_a_card_from_a_specified_position($position)
     {
         $deck = $this->builder->build();
-        $this->assertCount(52, $deck->cards());
+        $this->assertCount(54, $deck->cards());
 
 
         $takenCard = $deck->take($position);
 
 
-        $this->assertCount(51, $deck->cards());
+        $this->assertCount(53, $deck->cards());
         $this->assertNotEquals($takenCard->identifier(), $deck->cards()[$position]->identifier());
         foreach ($deck->cards() as $card) {
             $this->assertNotEquals($takenCard->identifier(), $card->identifier());
@@ -125,14 +125,14 @@ class DeckTest extends TestCase
     public function deck_can_put_a_card_into_a_specified_position($position)
     {
         $deck = $this->builder->build();
-        $this->assertCount(52, $deck->cards());
+        $this->assertCount(54, $deck->cards());
         $newCard = new Card(Suite::HEARTS(), 7);
 
 
         $deck->put($newCard, $position);
 
 
-        $this->assertCount(53, $deck->cards());
+        $this->assertCount(55, $deck->cards());
         $this->assertEquals($newCard->identifier(), $deck->cards()[$position]->identifier());
     }
 }

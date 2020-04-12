@@ -22,7 +22,7 @@ class ShufflerTest extends TestCase
 
         $shuffler->shuffle($deck);
 
-        $this->assertCount(52, $deck->cards());
+        $this->assertCount(54, $deck->cards());
         $this->assertNotEquals($oldCards, $deck->cards());
     }
 
