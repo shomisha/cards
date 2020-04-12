@@ -46,4 +46,14 @@ class SuiteTest extends TestCase
         $this->assertEquals('spades', $spades);
         $this->assertEquals('spades', $spades->name());
     }
+
+    /** @test */
+    public function suite_can_instantiate_jokers()
+    {
+        $joker = Suite::JOKER();
+
+        $this->assertInstanceOf(Suite::class, $joker);
+        $this->assertEquals('joker', $joker);
+        $this->assertEquals('joker', $joker->name());
+    }
 }
