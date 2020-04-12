@@ -12,6 +12,16 @@ class DeckBuilder implements BuilderContract
 {
     public function build(): DeckContract
     {
+        return new Deck($this->getCards());
+    }
+
+    public function buildMultiple(int $count): DeckContract
+    {
+        return new Deck(array_merge(...array_fill(0, $count, $this->getCards())));
+    }
+
+    protected function getCards()
+    {
         $cards = [];
 
         foreach (Suite::all() as $suite) {
@@ -20,6 +30,6 @@ class DeckBuilder implements BuilderContract
             }
         }
 
-        return new Deck($cards);
+        return $cards;
     }
 }
