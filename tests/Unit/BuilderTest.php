@@ -4,6 +4,7 @@ namespace Shomisha\Cards\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Cards\Joker;
+use Shomisha\Cards\Contracts\Card;
 use Shomisha\Cards\DeckBuilders\DeckBuilder;
 use Shomisha\Cards\Decks\Deck;
 
@@ -101,5 +102,33 @@ class BuilderTest extends TestCase
             $this->assertCount(3, $group);
         }
         $this->assertEquals(6, $jokers);
+    }
+
+    /** @test */
+    public function builder_can_build_decks_without_jokers()
+    {
+        $builder = (new DeckBuilder())->withJokers(false);
+
+
+        $deck = $builder->build();
+
+
+        $cards = $deck->cards();
+        $this->assertCount(52, $cards);
+        $this->assertNotContains('joker', array_map(function (Card $card) { return $card->identifier(); }, $cards));
+    }
+
+    /** @test */
+    public function builder_can_build_multi_decks_without_jokers()
+    {
+        $builder = (new DeckBuilder())->withJokers(false);
+
+
+        $deck = $builder->buildMultiple(3);
+
+
+        $cards = $deck->cards();
+        $this->assertCount(156, $cards);
+        $this->assertNotContains('joker', array_map(function (Card $card) { return $card->identifier(); }, $cards));
     }
 }
