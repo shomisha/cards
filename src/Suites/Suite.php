@@ -72,6 +72,19 @@ class Suite implements SuiteContract
     }
 
     /**
+     * Instantiate a virtual suite used for jokers.
+     *
+     * @return \Shomisha\Cards\Suites\Suite
+     */
+    public static function JOKER(): Suite
+    {
+        return new class extends Suite
+        {
+            protected $name = 'joker';
+        };
+    }
+
+    /**
      * Return instances of all available suites.
      *
      * @return \Shomisha\Cards\Suites\Suite[]
