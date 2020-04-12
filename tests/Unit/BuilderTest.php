@@ -51,4 +51,41 @@ class BuilderTest extends TestCase
             $this->assertTrue(in_array($card->identifier(), $expectedCards));
         }
     }
+
+    /**
+     * @test
+     * @testWith [2]
+     *           [4]
+     *           [6]
+     */
+    public function builder_can_build_decks_that_consist_of_multiple_decks($count)
+    {
+        $builder = new DeckBuilder();
+
+
+        $multiDeck = $builder->buildMultiple($count);
+
+
+        $this->assertCount(52 * $count, $multiDeck->cards());
+    }
+
+    /** @test */
+    public function multi_decks_will_have_the_same_number_of_repetitions_for_each_card()
+    {
+        $builder = new DeckBuilder();
+
+
+        $multiDeck = $builder->buildMultiple(3);
+
+
+        $cards = $multiDeck->cards();
+        $groupedByIdentifier = [];
+        foreach ($cards as $card) {
+            $groupedByIdentifier[$card->identifier()][] = $card;
+        }
+        
+        foreach ($groupedByIdentifier as $group) {
+            $this->assertCount(3, $group);
+        }
+    }
 }
