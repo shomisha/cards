@@ -135,4 +135,53 @@ class DeckTest extends TestCase
         $this->assertCount(55, $deck->cards());
         $this->assertEquals($newCard->identifier(), $deck->cards()[$position]->identifier());
     }
+
+    /** @test */
+    public function deck_can_be_split_to_two_controlled_decks()
+    {
+        $deck = (new DeckBuilder())->build();
+        $this->assertCount(54, $deck->cards());
+        $splitCard = $deck->peek(20);
+
+
+        $split = $deck->split(20);
+
+
+        $this->assertEquals($deck, $split[1]);
+        $this->assertEquals($splitCard->identifier(), $split[1]->cards()[0]->identifier());
+        $this->assertCount(34, $deck->cards());
+        $this->assertCount(20, $split[0]->cards());
+    }
+
+    /** @test */
+    public function deck_can_be_split_into_two_random_decks()
+    {
+        $deck = (new DeckBuilder())->build();
+        $this->assertCount(54, $deck->cards());
+
+        $split = $deck->split();
+
+        $this->assertNotCount(54, $deck->cards());
+        $this->assertNotEmpty($deck->cards());
+        $this->assertNotCount(54, $split[0]->cards());
+        $this->assertNotEmpty($split[0]->cards());
+    }
+
+    /** @test */
+    public function deck_can_be_joined_using_another_deck()
+    {
+        $builder = new DeckBuilder();
+
+        $deck1 = $builder->build();
+        $this->assertCount(54, $deck1->cards());
+
+        $deck2 = $builder->build();
+        $this->assertCount(54, $deck2->cards());
+
+
+        $deck1->join($deck2);
+
+        $this->assertCount(108, $deck1->cards());
+        $this->assertEmpty($deck2->cards());
+    }
 }
