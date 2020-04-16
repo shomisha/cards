@@ -84,6 +84,8 @@ It contains the following methods:
 - `take(int $position): ?Shomisha\Cards\Cards\Card`
 - `place(Card $card): Shomisha\Cards\Decks\Deck`
 - `put(Card $card, int $position): Shomisha\Cards\Decks\Deck`
+- `split(int $position = -1): array`
+- `join(Deck $deck): Deck`
 
 
 #### The `cards()` method
@@ -198,6 +200,75 @@ $deck->take(42); // Returns the previously created Joker.
 ``` 
 
 If a card already exists at the provided position, the new card will not override the existing one but rather increment the positions of all latter cards in order to make room for itself.
+
+
+#### The `split(int $position = -1)` method
+
+The `split(int $position = -1)` method is used for splitting the deck in two separate decks. It can behave in two ways: controlled 
+splitting where you control at what card the deck is split, and random splitting where the splitting card is randomly chosen.
+
+This method works in the same way as most of the other `Deck` methods, i.e. it modifies the deck called upon. 
+In other words, it will remove the cards that go into the new, split, deck from the existing deck.
+
+Here is an example of how controlled splitting is performed:
+
+```php
+use \Shomisha\Cards\DeckBuilders\DeckBuilder;
+
+$deck = (new DeckBuilder())->build();
+
+$splitDecks = $deck->split(20);
+
+count($splitDecks[0]->cards()); // 20
+count($splitDecks[1]->cards()); // 34
+$deck === $splitDecks[1];       // true
+```
+
+As you can see, the `split()` method returns an array. This array contains the two split decks: the first one is the new deck, the second one is the old deck the splitting is performed upon.
+The first returned deck will contain the top N cards from the old deck, N being the position of the splitting card. 
+The second deck will be the instance of the deck the splitting was performed on. That deck now contains the remaining bottom M - N cards, M being the original number of cards in the deck and N being the position of the splitting card.
+This behaviour, as well as all others, mimics what actually happens with a real deck of cards when you split it in two.
+
+And here is what happens when a deck is randomly split:
+
+```php
+use \Shomisha\Cards\DeckBuilders\DeckBuilder;
+
+$deck = (new DeckBuilder())->build();
+
+$splitDecks = $deck->split();
+
+count($splitDecks[0]->cards()); // 12
+count($splitDecks[1]->cards()); // 42
+$deck === $splitDecks[1];       // true
+```
+
+Splitting a deck randomly behaves exactly the same as controlled deck splitting, except the splitting card is randomly selected instead of user picked.
+The return value is the same, the new deck and the original deck, and the original deck is modified in the same manner.
+
+
+#### The `join(Deck $deck)` method
+
+This method is the opposite of the `split()` method. It is used for joining two decks together, or rather appending one decks cards to another.
+This card will put all the cards from the deck provided as an argument and place them on top of the deck the method is called upon.
+
+Here is an example:
+
+```php
+use \Shomisha\Cards\DeckBuilders\DeckBuilder;
+
+$builder = new DeckBuilder();
+$deck1 = $builder->build();
+$deck2 = $builder->build();
+
+$deck1->join($deck2);
+
+count($deck1->cards()); // 108
+count($deck2->cards()); // 0
+```
+
+The snippet above shows how a deck got joined to another deck and all the cards from the joinee deck got transferred to the joined deck.
+The cards from the joinee deck were put on top of the cards from the joined deck, thus becoming a part of it.
 
 
 ### `Card`
