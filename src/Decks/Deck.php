@@ -32,6 +32,11 @@ class Deck implements DeckContract
         return $this;
     }
 
+    public function peek(int $position = 0): ?Card
+    {
+        return (clone $this->cards[$position]) ?? null;
+    }
+
     public function put(Card $card, int $position): DeckContract
     {
         array_splice($this->cards, $position, 0, [$card]);
@@ -46,5 +51,29 @@ class Deck implements DeckContract
         array_splice($this->cards, $position, 1);
 
         return $card;
+    }
+
+    public function split(int $position = -1): array
+    {
+        if ($position == -1) {
+            $position = random_int(1, count($this->cards())) - 1;
+        }
+
+        $split = array_slice($this->cards, 0, $position);
+        $this->cards = array_slice($this->cards, $position);
+
+        return [
+            new Deck($split),
+            $this
+        ];
+    }
+
+    public function join(DeckContract $otherDeck): DeckContract
+    {
+        while ($card = $otherDeck->draw()) {
+            $this->place($card);
+        }
+
+        return $this;
     }
 }

@@ -8,7 +8,7 @@ interface Deck
      * Returns all the cards on the deck stack.
      * All of the cards are still available within the deck.
      *
-     * @return array
+     * @return array|\Shomisha\Cards\Contracts\Card[]
      */
     public function cards(): array;
 
@@ -45,4 +45,31 @@ interface Deck
      * @return \Shomisha\Cards\Contracts\Card
      */
     public function take(int $position): ?Card;
+
+    /**
+     * Returns an instance of the card at the specified position
+     * without removing it from the deck.
+     *
+     * @param int $position
+     * @return \Shomisha\Cards\Contracts\Card|null
+     */
+    public function peek(int $position = 0): ?Card;
+
+    /**
+     * Splits the deck into two decks at the specified position.
+     * This method alters the deck it is called upon.
+     *
+     * @param int $position
+     * @return array|\Shomisha\Cards\Contracts\Deck[]
+     */
+    public function split(int $position = -1): array;
+
+    /**
+     * Joins the specified deck to the deck split() was called upon.
+     * Does not modify the specified deck.
+     *
+     * @param \Shomisha\Cards\Contracts\Deck $deck
+     * @return \Shomisha\Cards\Contracts\Deck
+     */
+    public function join(Deck $deck): Deck;
 }
