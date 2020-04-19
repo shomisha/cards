@@ -19,6 +19,24 @@ class Suite implements SuiteContract
         return $this->name;
     }
 
+    public static function fromString(string $suite)
+    {
+        switch ($suite) {
+            case self::CLUBS():
+                return self::CLUBS();
+            case self::DIAMONDS():
+                return self::DIAMONDS();
+            case self::HEARTS():
+                return self::HEARTS();
+            case self::SPADES():
+                return self::SPADES();
+            case self::JOKER():
+                return self::JOKER();
+            default:
+                throw new \InvalidArgumentException("Invalid suite: {$suite}");
+        }
+    }
+
     /**
      * Instantiate a clubs suite
      *
