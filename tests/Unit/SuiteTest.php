@@ -56,4 +56,27 @@ class SuiteTest extends TestCase
         $this->assertEquals('joker', $joker);
         $this->assertEquals('joker', $joker->name());
     }
+
+    public function suiteNamesMap():array
+    {
+        return [
+            ['clubs', Suite::CLUBS()],
+            ['diamonds', Suite::DIAMONDS()],
+            ['hearts', Suite::HEARTS()],
+            ['spades', Suite::SPADES()],
+            ['joker', Suite::JOKER()],
+        ];
+    }
+
+    /**
+    * @test
+    * @dataProvider suiteNamesMap
+    **/
+    public function suite_can_be_instantiated_by_suite_name($name, $expectedSuite)
+    {
+        $actualSuite = Suite::fromString($name);
+
+        $this->assertInstanceOf(Suite::class, $actualSuite);
+        $this->assertEquals($expectedSuite, $actualSuite);
+    }
 }
