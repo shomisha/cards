@@ -2,7 +2,6 @@
 
 namespace Shomisha\Cards\Game\BoardPositions;
 
-use Shomisha\Cards\Contracts\CardGroup;
 use Shomisha\Cards\Contracts\Game\BoardPosition as BoardPositionContract;
 
 abstract class BoardPosition implements BoardPositionContract
@@ -15,7 +14,7 @@ abstract class BoardPosition implements BoardPositionContract
         return $this->cards;
     }
 
-    public function setCards(array $cards): CardGroup
+    public function setCards(array $cards): self
     {
         $this->cards = $cards;
 

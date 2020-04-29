@@ -10,5 +10,5 @@ interface CardGroup
     public function getCards(): array;
 
     /** @param \Shomisha\Cards\Contracts\Card[] $cards */
-    public function setCards(array $cards): self;
+    public function setCards(array $cards);
 }

@@ -26,7 +26,7 @@ abstract class CardStack implements CardGroup
         return $this->cards;
     }
 
-    public function setCards(array $cards): CardGroup
+    public function setCards(array $cards): self
     {
         $this->cards = $cards;
 
@@ -52,7 +52,7 @@ abstract class CardStack implements CardGroup
         return (clone $this->cards[$position]) ?? null;
     }
 
-    public function place(Card $card): CardGroup
+    public function place(Card $card): self
     {
         array_unshift($this->cards, $card);
 
