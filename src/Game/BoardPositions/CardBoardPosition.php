@@ -3,55 +3,37 @@
 namespace Shomisha\Cards\Game\BoardPositions;
 
 use Shomisha\Cards\Contracts\Card;
-use Shomisha\Cards\Contracts\Game\BoardPosition as BoardPositionContract;
+use Shomisha\Cards\Contracts\CardGroup;
 
-class CardBoardPosition implements BoardPositionContract
+class CardBoardPosition extends BoardPosition
 {
-    /** @var Card */
-    protected $card;
-
-    /** @var string */
-    protected $side;
-
-    public function __construct(Card $card = null, string $side = null)
+    public function setCards(array $cards): CardGroup
     {
-        $this->card = $card;
-        $this->side = $side ?? BoardPositionContract::FACE_UP;
+        if (count($cards) > 1) {
+            throw new \InvalidArgumentException("Card position cannot contain more than a single card.");
+        }
+
+        $this->cards = $cards;
     }
 
-    public function isRevealed(): bool
+    public function put(Card $card): self
     {
-        return $this->side === BoardPositionContract::FACE_UP;
-    }
+        $this->cards = [$card];
 
-    public function reveal(): ?Card
-    {
-        $this->side = BoardPositionContract::FACE_UP;
-
-        return $this->card;
-    }
-
-    public function hide(): void
-    {
-        $this->side = BoardPositionContract::FACE_DOWN;
-    }
-
-    public function putCard(Card $card): BoardPositionContract
-    {
-        $this->card = $card;
-    }
-
-    public function takeCard(): ?Card
-    {
-        $card = $this->card;
-
-        $this->card = null;
-
-        return $card;
+        return $this;
     }
 
     public function peek(): ?Card
     {
-        return $this->card;
+        return $this->cards[0] ?? null;
+    }
+
+    public function take(): ?Card
+    {
+        $card = $this->cards[0] ?? null;
+
+        $this->cards = [];
+
+        return $card;
     }
 }
