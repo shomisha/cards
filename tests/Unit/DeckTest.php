@@ -3,6 +3,7 @@
 namespace Shomisha\Cards\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use Shomisha\Cards\Cards\Joker;
 use Shomisha\Cards\DeckBuilders\DeckBuilder;
 use Shomisha\Cards\Cards\Card;
 use Shomisha\Cards\Decks\Deck;
@@ -18,6 +19,19 @@ class DeckTest extends TestCase
         parent::setUp();
 
         $this->builder = new DeckBuilder();
+    }
+
+    /** @test */
+    public function deck_cannot_be_instantiated_using_non_card_elements()
+    {
+        $cards = [
+            new Card(Suite::HEARTS(), 13),
+            new Joker(),
+            'not-a-card'
+        ];
+        $this->expectException(\InvalidArgumentException::class);
+
+        $deck = new Deck($cards);
     }
 
     /** @test */

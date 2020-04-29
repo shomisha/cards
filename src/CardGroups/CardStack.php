@@ -12,6 +12,12 @@ abstract class CardStack implements CardGroup
 
     public function __construct(array $cards = [])
     {
+        foreach ($cards as $card) {
+            if (!$card instanceof Card) {
+                throw new \InvalidArgumentException("Not all elements implement the Card interface.");
+            }
+        }
+
         $this->cards = $cards;
     }
 
