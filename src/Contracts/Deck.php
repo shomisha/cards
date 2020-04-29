@@ -2,7 +2,7 @@
 
 namespace Shomisha\Cards\Contracts;
 
-interface Deck
+interface Deck extends CardGroup
 {
     /**
      * Returns all the cards on the deck stack.

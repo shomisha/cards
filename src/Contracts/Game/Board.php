@@ -2,7 +2,9 @@
 
 namespace Shomisha\Cards\Contracts\Game;
 
-interface Board
+use Shomisha\Cards\Contracts\CardGroup;
+
+interface Board extends CardGroup
 {
     /** @return \Shomisha\Cards\Contracts\Game\BoardPosition[] */
     public function getPositionsStructure(): array;
