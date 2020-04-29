@@ -102,6 +102,14 @@ class Suite implements SuiteContract
         };
     }
 
+    public static function HIDDEN(): Suite
+    {
+        return new class extends Suite
+        {
+            protected $name = '*';
+        };
+    }
+
     /**
      * Return instances of all available suites.
      *
