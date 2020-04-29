@@ -5,14 +5,6 @@ namespace Shomisha\Cards\Contracts;
 interface Deck extends CardGroup
 {
     /**
-     * Returns all the cards on the deck stack.
-     * All of the cards are still available within the deck.
-     *
-     * @return array|\Shomisha\Cards\Contracts\Card[]
-     */
-    public function cards(): array;
-
-    /**
      * Draws the card from the top of the deck stack.
      * The drawn card is no longer available in the deck.
      *
@@ -26,7 +18,7 @@ interface Deck extends CardGroup
      * @param \Shomisha\Cards\Contracts\Card $card
      * @return $this
      */
-    public function place(Card $card): self;
+    public function place(Card $card);
 
     /**
      * Puts a card to the specified position of the deck stack.
@@ -35,7 +27,7 @@ interface Deck extends CardGroup
      * @param int $position
      * @return $this
      */
-    public function put(Card $card, int $position): self;
+    public function put(Card $card, int $position);
 
     /**
      * Takes a card from the specified position of the deck stack.
