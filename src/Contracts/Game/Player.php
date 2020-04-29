@@ -8,5 +8,5 @@ interface Player
 
     public function getHand(): Hand;
 
-    public function setHand(Hand $hand): self;
+    public function setHand(Hand $hand);
 }

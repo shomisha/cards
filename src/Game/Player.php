@@ -2,6 +2,7 @@
 
 namespace Shomisha\Cards\Game;
 
+use Shomisha\Cards\Contracts\Game\Hand;
 use Shomisha\Cards\Contracts\Game\Player as PlayerContract;
 
 class Player implements PlayerContract
@@ -9,9 +10,25 @@ class Player implements PlayerContract
     /** @var string */
     protected $name;
 
-    public function __construct(string $name)
+    /** @var Hand */
+    protected $hand;
+
+    public function __construct(string $name, Hand $hand = null)
     {
         $this->name = $name;
+        $this->hand = $hand;
+    }
+
+    public function getHand(): Hand
+    {
+        return $this->hand;
+    }
+
+    public function setHand(Hand $hand): self
+    {
+        $this->hand = $hand;
+
+        return $this;
     }
 
     public function name(): string
