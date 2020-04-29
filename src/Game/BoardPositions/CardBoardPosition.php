@@ -2,37 +2,56 @@
 
 namespace Shomisha\Cards\Game\BoardPositions;
 
+use Shomisha\Cards\Contracts\Game\BoardPosition;
 use Shomisha\Cards\Contracts\Card;
-use Shomisha\Cards\Contracts\CardGroup;
 
-class CardBoardPosition extends BoardPosition
+class CardBoardPosition implements BoardPosition
 {
-    public function setCards(array $cards): CardGroup
+    /** @var Card */
+    protected $card;
+
+    public function __construct(Card $card = null)
+    {
+        $this->card = $card;
+    }
+
+    public function getCards(): array
+    {
+        return [$this->card];
+    }
+
+    public function setCards(array $cards): self
     {
         if (count($cards) > 1) {
             throw new \InvalidArgumentException("Card position cannot contain more than a single card.");
         }
 
-        $this->cards = $cards;
+        $this->card = $cards[0];
+
+        return $this;
     }
 
     public function put(Card $card): self
     {
-        $this->cards = [$card];
+        $this->card = $card;
 
         return $this;
     }
 
     public function peek(): ?Card
     {
-        return $this->cards[0] ?? null;
+        if ($this->card) {
+            return clone $this->card;
+        }
+
+        return null;
     }
 
     public function take(): ?Card
     {
-        $card = $this->cards[0] ?? null;
+        $card = $this->card;
 
-        $this->cards = [];
+        $this->card = null;
 
         return $card;
     }
