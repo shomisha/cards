@@ -12,11 +12,7 @@ abstract class CardStack implements CardGroup
 
     public function __construct(array $cards = [])
     {
-        foreach ($cards as $card) {
-            if (!$card instanceof Card) {
-                throw new \InvalidArgumentException("Not all elements implement the Card interface.");
-            }
-        }
+        $this->validateCards($cards);
 
         $this->cards = $cards;
     }
@@ -28,6 +24,8 @@ abstract class CardStack implements CardGroup
 
     public function setCards(array $cards): self
     {
+        $this->validateCards($cards);
+
         $this->cards = $cards;
 
         return $this;
@@ -64,5 +62,14 @@ abstract class CardStack implements CardGroup
         array_splice($this->cards, $position, 0, [$card]);
 
         return $this;
+    }
+
+    protected function validateCards(array $cards)
+    {
+        foreach ($cards as $card) {
+            if (!$card instanceof Card) {
+                throw new \InvalidArgumentException("Not all elements implement the Card interface.");
+            }
+        }
     }
 }

@@ -49,6 +49,40 @@ class DeckTest extends TestCase
     }
 
     /** @test */
+    public function deck_can_override_all_cards()
+    {
+        $cards = [
+            new Card(Suite::HEARTS(), 8),
+            new Joker(),
+        ];
+        $deck = (new DeckBuilder())->build();
+        $this->assertCount(54, $deck->getCards());
+
+
+        $deck->setCards($cards);
+
+
+        $this->assertCount(2, $deck->getCards());
+        $this->assertEquals($cards, $deck->getCards());
+    }
+
+    /** @test */
+    public function deck_cannot_override_cards_using_non_card_elements()
+    {
+        $cards = [
+            new Joker(),
+            'not-a-card',
+        ];
+        $deck = (new DeckBuilder())->build();
+        $this->assertCount(54, $deck->getCards());
+
+        $this->expectException(\InvalidArgumentException::class);
+
+
+        $deck->setCards($cards);
+    }
+
+    /** @test */
     public function deck_can_draw_the_first_card_from_the_stack()
     {
         $deck = $this->builder->build();
