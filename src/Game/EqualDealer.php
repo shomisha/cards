@@ -14,9 +14,15 @@ class EqualDealer implements Dealer
     /** @var int|null */
     protected $perPlayer;
 
-    public function __construct(int $perPlayer)
+    public function __construct(Deck $deck, int $perPlayer = null)
     {
+        $this->deck = $deck;
         $this->perPlayer = $perPlayer;
+    }
+
+    public static function fromDeck(Deck $deck)
+    {
+        return new self($deck);
     }
 
     public function using(Deck $deck): Dealer
@@ -26,13 +32,14 @@ class EqualDealer implements Dealer
         return $this;
     }
 
+    public function getDeck(): Deck
+    {
+        return $this->deck;
+    }
+
     public function dealTo(Player $player): Dealer
     {
-        for ($i = 0; $i < $this->perPlayer; $i++) {
-            $card = $this->deck->draw();
-
-            // TODO: add card to players hand
-        }
+        $player->setHand($this->prepareHand());
 
         return $this;
     }
@@ -42,5 +49,16 @@ class EqualDealer implements Dealer
         $this->perPlayer = $perPlayer;
 
         return $this;
+    }
+
+    protected function prepareHand(): Hand
+    {
+        $cards = [];
+
+        for ($i = 0; $i < $this->perPlayer; $i++) {
+            $cards[] = $this->deck->draw();
+        }
+
+        return new Hand($cards);
     }
 }
