@@ -7,6 +7,13 @@ use Shomisha\Cards\Game\BoardPositions\StackBoardPosition;
 
 class StackBoard extends Board
 {
+    public function __construct(array $cards = [])
+    {
+        parent::__construct();
+
+        $this->getStack()->setCards($cards);
+    }
+
     public function initializePositions(): BoardContract
     {
         $this->positions['stack'] = new StackBoardPosition();
