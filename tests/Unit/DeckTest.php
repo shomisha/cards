@@ -25,30 +25,30 @@ class DeckTest extends TestCase
     {
         $deck = $this->builder->build();
 
-        $cards = $deck->cards();
+        $cards = $deck->getCards();
 
         $this->assertCount(54, $cards);
         $this->assertInstanceOf(Card::class, $cards[0]);
 
         // Assert that the cards will remain in the deck
-        $this->assertEquals($cards, $deck->cards());
+        $this->assertEquals($cards, $deck->getCards());
     }
 
     /** @test */
     public function deck_can_draw_the_first_card_from_the_stack()
     {
         $deck = $this->builder->build();
-        $expectedCard = $deck->cards()[0];
-        $this->assertCount(54, $deck->cards());
+        $expectedCard = $deck->getCards()[0];
+        $this->assertCount(54, $deck->getCards());
 
 
         $actualCard = $deck->draw();
 
 
         $this->assertEquals($expectedCard->identifier(), $actualCard->identifier());
-        $this->assertCount(53, $deck->cards());
-        $this->assertNotEquals($expectedCard->identifier(), $deck->cards()[0]);
-        foreach ($deck->cards() as $card) {
+        $this->assertCount(53, $deck->getCards());
+        $this->assertNotEquals($expectedCard->identifier(), $deck->getCards()[0]);
+        foreach ($deck->getCards() as $card) {
             $this->assertNotEquals($expectedCard->identifier(), $card->identifier());
         }
     }
@@ -70,14 +70,14 @@ class DeckTest extends TestCase
     {
         $deck = $this->builder->build();
         $newCard = new Card(Suite::SPADES(), 10);
-        $this->assertCount(54, $deck->cards());
+        $this->assertCount(54, $deck->getCards());
 
 
         $deck->place($newCard);
 
 
-        $this->assertCount(55, $deck->cards());
-        $this->assertEquals($newCard->identifier(), $deck->cards()[0]->identifier());
+        $this->assertCount(55, $deck->getCards());
+        $this->assertEquals($newCard->identifier(), $deck->getCards()[0]->identifier());
     }
 
     /**
@@ -90,15 +90,15 @@ class DeckTest extends TestCase
     public function deck_can_take_a_card_from_a_specified_position($position)
     {
         $deck = $this->builder->build();
-        $this->assertCount(54, $deck->cards());
+        $this->assertCount(54, $deck->getCards());
 
 
         $takenCard = $deck->take($position);
 
 
-        $this->assertCount(53, $deck->cards());
-        $this->assertNotEquals($takenCard->identifier(), $deck->cards()[$position]->identifier());
-        foreach ($deck->cards() as $card) {
+        $this->assertCount(53, $deck->getCards());
+        $this->assertNotEquals($takenCard->identifier(), $deck->getCards()[$position]->identifier());
+        foreach ($deck->getCards() as $card) {
             $this->assertNotEquals($takenCard->identifier(), $card->identifier());
         }
     }
@@ -125,22 +125,22 @@ class DeckTest extends TestCase
     public function deck_can_put_a_card_into_a_specified_position($position)
     {
         $deck = $this->builder->build();
-        $this->assertCount(54, $deck->cards());
+        $this->assertCount(54, $deck->getCards());
         $newCard = new Card(Suite::HEARTS(), 7);
 
 
         $deck->put($newCard, $position);
 
 
-        $this->assertCount(55, $deck->cards());
-        $this->assertEquals($newCard->identifier(), $deck->cards()[$position]->identifier());
+        $this->assertCount(55, $deck->getCards());
+        $this->assertEquals($newCard->identifier(), $deck->getCards()[$position]->identifier());
     }
 
     /** @test */
     public function deck_can_be_split_to_two_controlled_decks()
     {
         $deck = (new DeckBuilder())->build();
-        $this->assertCount(54, $deck->cards());
+        $this->assertCount(54, $deck->getCards());
         $splitCard = $deck->peek(20);
 
 
@@ -148,23 +148,23 @@ class DeckTest extends TestCase
 
 
         $this->assertEquals($deck, $split[1]);
-        $this->assertEquals($splitCard->identifier(), $split[1]->cards()[0]->identifier());
-        $this->assertCount(34, $deck->cards());
-        $this->assertCount(20, $split[0]->cards());
+        $this->assertEquals($splitCard->identifier(), $split[1]->getCards()[0]->identifier());
+        $this->assertCount(34, $deck->getCards());
+        $this->assertCount(20, $split[0]->getCards());
     }
 
     /** @test */
     public function deck_can_be_split_into_two_random_decks()
     {
         $deck = (new DeckBuilder())->build();
-        $this->assertCount(54, $deck->cards());
+        $this->assertCount(54, $deck->getCards());
 
         $split = $deck->split();
 
-        $this->assertNotCount(54, $deck->cards());
-        $this->assertNotEmpty($deck->cards());
-        $this->assertNotCount(54, $split[0]->cards());
-        $this->assertNotEmpty($split[0]->cards());
+        $this->assertNotCount(54, $deck->getCards());
+        $this->assertNotEmpty($deck->getCards());
+        $this->assertNotCount(54, $split[0]->getCards());
+        $this->assertNotEmpty($split[0]->getCards());
     }
 
     /** @test */
@@ -173,15 +173,15 @@ class DeckTest extends TestCase
         $builder = new DeckBuilder();
 
         $deck1 = $builder->build();
-        $this->assertCount(54, $deck1->cards());
+        $this->assertCount(54, $deck1->getCards());
 
         $deck2 = $builder->build();
-        $this->assertCount(54, $deck2->cards());
+        $this->assertCount(54, $deck2->getCards());
 
 
         $deck1->join($deck2);
 
-        $this->assertCount(108, $deck1->cards());
-        $this->assertEmpty($deck2->cards());
+        $this->assertCount(108, $deck1->getCards());
+        $this->assertEmpty($deck2->getCards());
     }
 }
