@@ -14,18 +14,18 @@ use Shomisha\Cards\Decks\Deck;
 abstract class Game implements GameContract
 {
     /** @var \Shomisha\Cards\Contracts\Game\Board */
-    private $board;
+    protected $board;
 
     /** @var \Shomisha\Cards\Contracts\Game\Player[] */
-    private $players;
+    protected $players;
 
     /** @var \Shomisha\Cards\Decks\Deck */
-    private $deck;
+    protected $deck;
 
     /** @var \Shomisha\Cards\Contracts\Game\Relay */
-    private $relay;
+    protected $relay;
 
-    private $currentPlayerPosition = -1;
+    protected $currentPlayerPosition = -1;
 
     abstract function prepareBoard(): Board;
 
@@ -100,8 +100,7 @@ abstract class Game implements GameContract
 
     protected function deal(): self
     {
-        $dealer = $this->getDealer()
-            ->using($this->deck);
+        $dealer = $this->getDealer();
 
         foreach ($this->players as $player) {
             $dealer->dealTo($player);
@@ -119,7 +118,7 @@ abstract class Game implements GameContract
 
     protected function guessNextPlayerPosition(): int
     {
-        $nextIndex = $this->currentPlayerPosition++;
+        $nextIndex = $this->currentPlayerPosition + 1;
 
         if (isset($this->players[$nextIndex])) {
             return $nextIndex;
