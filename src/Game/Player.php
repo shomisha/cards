@@ -19,7 +19,7 @@ class Player implements PlayerContract
         $this->hand = $hand;
     }
 
-    public function getHand(): Hand
+    public function getHand(): ?Hand
     {
         return $this->hand;
     }

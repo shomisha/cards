@@ -6,7 +6,7 @@ interface Player
 {
     public function name(): string;
 
-    public function getHand(): Hand;
+    public function getHand(): ?Hand;
 
     public function setHand(Hand $hand);
 }
