@@ -38,7 +38,7 @@ abstract class Move implements MoveContract
     protected function createEffects(array $effectClasses)
     {
         foreach ($effectClasses as $effectClass) {
-            return new $effectClass;
+            return new $effectClass($this);
         }
     }
 }
