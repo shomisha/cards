@@ -10,6 +10,8 @@ interface Game
 
     public function advance(Move $move);
 
+    public function wrapUp();
+
     /** @return \Shomisha\Cards\Contracts\Game\Player[] */
     public function players(): array;
 

@@ -10,6 +10,7 @@ use Shomisha\Cards\Contracts\Game\Message;
 use Shomisha\Cards\Contracts\Game\Move;
 use Shomisha\Cards\Contracts\Game\Player;
 use Shomisha\Cards\Decks\Deck;
+use Shomisha\Cards\Exceptions\EndGameException;
 
 abstract class Game implements GameContract
 {
@@ -37,6 +38,10 @@ abstract class Game implements GameContract
 
     abstract function validateMove(Move $move): void;
 
+    abstract function hasEnded(): bool;
+
+    abstract function canEnd(): bool;
+
     abstract function getNewMoveMessage(): Message;
 
     public function begin(): GameContract
@@ -62,10 +67,20 @@ abstract class Game implements GameContract
             $this->applyMoveEffects($move->getPreApplicationEffects());
         }
 
-        $move->apply($this);
+        try {
+            $move->apply($this);
+        } catch (EndGameException $e) {
+            if ($this->canEnd()) {
+                return $this->wrapUp();
+            }
+        }
 
         if ($move->hasPostApplicationEffects()) {
             $this->applyMoveEffects($move->getPostApplicationEffects());
+        }
+
+        if ($this->hasEnded()) {
+            return $this->wrapUp();
         }
 
         $this->initiateNextMove();
