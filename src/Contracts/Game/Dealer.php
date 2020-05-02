@@ -6,7 +6,7 @@ use Shomisha\Cards\Contracts\Deck;
 
 interface Dealer
 {
-    public function using(Deck $deck): self;
+    public function using(Deck $deck);
 
-    public function dealTo(Player $player): self;
+    public function dealTo(Player $player);
 }

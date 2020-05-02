@@ -6,9 +6,9 @@ use Shomisha\Cards\Contracts\Deck;
 
 interface Game
 {
-    public function begin(): self;
+    public function begin();
 
-    public function advance(Move $move): self;
+    public function advance(Move $move);
 
     /** @return \Shomisha\Cards\Contracts\Game\Player[] */
     public function players(): array;

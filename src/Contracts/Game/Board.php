@@ -9,7 +9,7 @@ interface Board
      *
      * @return $this
      */
-    public function initializePositions(): self;
+    public function initializePositions();
 
     /**
      * Get all of the available positions.
@@ -33,5 +33,5 @@ interface Board
      * @param \Shomisha\Cards\Contracts\Game\BoardPosition $position
      * @return $this
      */
-    public function putOn(string $positionName, BoardPosition $position): self;
+    public function putOn(string $positionName, BoardPosition $position);
 }
