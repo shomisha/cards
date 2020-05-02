@@ -5,6 +5,7 @@ namespace Shomisha\Cards\Tests\Unit\Game;
 use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Cards\Card;
 use Shomisha\Cards\Cards\Joker;
+use Shomisha\Cards\Contracts\Game\Relay;
 use Shomisha\Cards\Decks\Deck;
 use Shomisha\Cards\Game\Boards\StackBoard;
 use Shomisha\Cards\Game\Effect;
@@ -47,6 +48,10 @@ class GameTest extends TestCase
 
         if ($properties['deck'] ?? false) {
             $this->setProtectedProperty($game, 'deck', $properties['deck']);
+        }
+
+        if ($properties['relay'] ?? false) {
+            $this->setProtectedProperty($game, 'relay', $properties['relay']);
         }
 
         if (array_key_exists('currentPlayerPosition', $properties)) {
@@ -235,6 +240,35 @@ class GameTest extends TestCase
 
 
         $this->assertEquals($players[$expectedPlayerPosition], $actualNextPlayer);
+    }
+
+    /** @test */
+    public function game_can_initiate_next_move()
+    {
+        $players = [
+            new Player('Misa'),
+            new Player('Stefan'),
+            new Player('Ivana'),
+        ];
+
+        $relay = \Mockery::mock(Relay::class);
+        $notifyExpectation = $relay->shouldReceive('notify')->withAnyArgs();
+
+        $game = $this->getGameWith([
+            'relay' => $relay,
+            'players' => $players,
+            'currentPlayerPosition' => 1,
+        ]);
+        $newMoveMessageExpectation = $game->shouldReceive('getNewMoveMessage');
+
+
+        $initiateMoveMethod = $this->getProtectedMethod($game, 'initiateNextMove');
+        $initiateMoveMethod->invoke($game);
+
+
+        $notifyExpectation->verify();
+        $newMoveMessageExpectation->verify();
+        $this->assertEquals($players[2], $game->currentPlayer());
     }
 
     /** @test */

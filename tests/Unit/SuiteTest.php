@@ -79,4 +79,14 @@ class SuiteTest extends TestCase
         $this->assertInstanceOf(Suite::class, $actualSuite);
         $this->assertEquals($expectedSuite, $actualSuite);
     }
+
+    /** @test */
+    public function suite_cannot_be_instantiated_using_an_invalid_suite_name()
+    {
+        $suiteName = 'invalid-suite';
+        $this->expectException(\InvalidArgumentException::class);
+
+
+        $suite = Suite::fromString($suiteName);
+    }
 }
