@@ -4,25 +4,23 @@ namespace Shomisha\Cards\Cards;
 
 use Shomisha\Cards\Contracts\Card as CardContract;
 use Shomisha\Cards\Contracts\Suite as SuiteContract;
+use Shomisha\Cards\Enums\CardSide;
 use Shomisha\Cards\Suites\Suite;
 
 class FaceDownCard implements CardContract
 {
-    const FACE_UP = 'face-up';
-    const FACE_DOWN = 'face-down';
-
     /** @var \Shomisha\Cards\Cards\Card */
     private $card;
 
     /** @var string */
     protected $side;
 
-    public function __construct(CardContract $card, string $side = self::FACE_DOWN)
+    public function __construct(CardContract $card, CardSide $side = null)
     {
         $this->card = $card;
 
-        if (!in_array($side, [self::FACE_UP, self::FACE_DOWN])) {
-            throw new \InvalidArgumentException("Invalid card side: {$side}");
+        if ($side === null) {
+            $side = CardSide::FACE_DOWN();
         }
 
         $this->side = $side;
@@ -30,19 +28,19 @@ class FaceDownCard implements CardContract
 
     public function isHidden()
     {
-        return $this->side === self::FACE_DOWN;
+        return $this->side == CardSide::FACE_DOWN();
     }
 
     public function hide(): self
     {
-        $this->side = self::FACE_DOWN;
+        $this->side = CardSide::FACE_DOWN();
 
         return $this;
     }
 
     public function reveal(): self
     {
-        $this->side = self::FACE_UP;
+        $this->side = CardSide::FACE_UP();
 
         return $this;
     }

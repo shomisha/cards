@@ -6,14 +6,22 @@ use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Cards\Card;
 use Shomisha\Cards\Cards\FaceDownCard;
 use Shomisha\Cards\Cards\Joker;
+use Shomisha\Cards\Enums\CardSide;
 use Shomisha\Cards\Suites\Suite;
 
 class FaceDownCardTest extends TestCase
 {
+    public function cardIsHiddenProvider()
+    {
+        return [
+            [CardSide::FACE_DOWN(), true],
+            [CardSide::FACE_UP(), false],
+        ];
+    }
+
     /**
      * @test
-     * @testWith ["face-down", true]
-     *           ["face-up", false]
+     * @dataProvider cardIsHiddenProvider
      */
     public function card_can_check_if_it_is_hidden($face, $expectedIsHidden)
     {
@@ -44,7 +52,7 @@ class FaceDownCardTest extends TestCase
     {
         $card = new Joker();
 
-        $faceUp = new FaceDownCard($card, FaceDownCard::FACE_UP);
+        $faceUp = new FaceDownCard($card, CardSide::FACE_UP());
 
 
         $this->assertFalse($faceUp->isHidden());
@@ -54,7 +62,7 @@ class FaceDownCardTest extends TestCase
     public function card_can_be_hidden()
     {
         $card = new Card(Suite::DIAMONDS(), 7);
-        $revealedCard = new FaceDownCard($card, FaceDownCard::FACE_UP);
+        $revealedCard = new FaceDownCard($card, CardSide::FACE_UP());
         $this->assertFalse($revealedCard->isHidden());
 
 
@@ -68,7 +76,7 @@ class FaceDownCardTest extends TestCase
     public function card_can_be_revealed()
     {
         $card = new Card(Suite::HEARTS(), 13);
-        $hiddenCard = new FaceDownCard($card, FaceDownCard::FACE_DOWN);
+        $hiddenCard = new FaceDownCard($card, CardSide::FACE_DOWN());
         $this->assertTrue($hiddenCard->isHidden());
 
 
@@ -83,7 +91,7 @@ class FaceDownCardTest extends TestCase
     {
         $hiddenCard = new FaceDownCard(
             new Card(Suite::SPADES(), 1),
-            FaceDownCard::FACE_DOWN
+            CardSide::FACE_DOWN()
         );
 
 
@@ -98,7 +106,7 @@ class FaceDownCardTest extends TestCase
     {
         $revealedCard = new FaceDownCard(
             new Card(Suite::SPADES(), 1),
-            FaceDownCard::FACE_UP
+            CardSide::FACE_UP()
         );
 
 
@@ -113,7 +121,7 @@ class FaceDownCardTest extends TestCase
     {
         $hiddenCard = new FaceDownCard(
             new Card(Suite::CLUBS(), 2),
-            FaceDownCard::FACE_DOWN
+            CardSide::FACE_DOWN()
         );
 
 
@@ -128,7 +136,7 @@ class FaceDownCardTest extends TestCase
     {
         $revealedCard = new FaceDownCard(
             new Card(Suite::CLUBS(), 2),
-            FaceDownCard::FACE_UP
+            CardSide::FACE_UP()
         );
 
 
@@ -143,7 +151,7 @@ class FaceDownCardTest extends TestCase
     {
         $hiddenCard = new FaceDownCard(
             new Joker(),
-            FaceDownCard::FACE_DOWN
+            CardSide::FACE_DOWN()
         );
 
 
@@ -158,7 +166,7 @@ class FaceDownCardTest extends TestCase
     {
         $revealedCard = new FaceDownCard(
             new Joker(),
-            FaceDownCard::FACE_UP
+            CardSide::FACE_UP()
         );
 
 
@@ -173,7 +181,7 @@ class FaceDownCardTest extends TestCase
     {
         $hiddenCard = new FaceDownCard(
             new Card(Suite::DIAMONDS(), 7),
-            FaceDownCard::FACE_DOWN
+            CardSide::FACE_DOWN()
         );
 
 
@@ -188,7 +196,7 @@ class FaceDownCardTest extends TestCase
     {
         $revealedCard = new FaceDownCard(
             new Card(Suite::DIAMONDS(), 7),
-            FaceDownCard::FACE_UP
+            CardSide::FACE_UP()
         );
 
 
