@@ -3,6 +3,7 @@
 namespace Shomisha\Cards\Tests\Unit\Game;
 
 use PHPUnit\Framework\TestCase;
+use Shomisha\Cards\Exceptions\EndGameException;
 use Shomisha\Cards\Game\Move;
 use Shomisha\Cards\Tests\Traits\OverridesProtectedAccess;
 
@@ -70,5 +71,16 @@ class MoveTest extends TestCase
 
 
         $this->assertEquals($expectedHasEffects, $actualHasEffects);
+    }
+
+    /** @test */
+    public function move_can_request_game_end()
+    {
+        $move = $this->getMove();
+        $this->expectException(EndGameException::class);
+
+
+        $method = $this->getProtectedMethod($move, 'requestGameEnd');
+        $method->invoke($move);
     }
 }

@@ -4,6 +4,7 @@ namespace Shomisha\Cards\Game;
 
 use Shomisha\Cards\Contracts\Game\Game;
 use Shomisha\Cards\Contracts\Game\Move as MoveContract;
+use Shomisha\Cards\Exceptions\EndGameException;
 
 abstract class Move implements MoveContract
 {
@@ -40,5 +41,10 @@ abstract class Move implements MoveContract
         foreach ($effectClasses as $effectClass) {
             return new $effectClass($this);
         }
+    }
+
+    protected function requestGameEnd(string $message = null)
+    {
+        throw new EndGameException($message);
     }
 }
