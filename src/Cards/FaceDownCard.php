@@ -17,7 +17,7 @@ class FaceDownCard implements CardContract
     /** @var string */
     protected $side;
 
-    public function __construct(Card $card, string $side = self::FACE_UP)
+    public function __construct(CardContract $card, string $side = self::FACE_DOWN)
     {
         $this->card = $card;
 
@@ -70,6 +70,8 @@ class FaceDownCard implements CardContract
         if ($this->isHidden()) {
             return Suite::HIDDEN();
         }
+
+        return $this->card->suite();
     }
 
     public function identifier(): string
