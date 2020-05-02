@@ -66,7 +66,7 @@ class DeckSerializationTest extends TestCase
 
         $this->assertInstanceOf(Deck::class, $unserializedDeck);
 
-        $unserializedCards = $unserializedDeck->cards();
+        $unserializedCards = $unserializedDeck->getCards();
         $this->assertCount(3, $unserializedCards);
         $this->assertEquals('clubs-1', $unserializedCards[0]->identifier());
     }

@@ -23,7 +23,7 @@ class ArrayDeckSerializer implements DeckSerializerContract
     {
         $serialized = [];
 
-        foreach ($deck->cards() as $card) {
+        foreach ($deck->getCards() as $card) {
             $serialized[] = $this->cardSerializer->serialize($card);
         }
 

@@ -16,14 +16,14 @@ class ShufflerTest extends TestCase
     {
         $shuffler = new Shuffler();
         $deck = (new DeckBuilder())->build();
-        $oldCards = $deck->cards();
-        $this->assertEquals($oldCards, $deck->cards());
+        $oldCards = $deck->getCards();
+        $this->assertEquals($oldCards, $deck->getCards());
 
 
         $shuffler->shuffle($deck);
 
-        $this->assertCount(54, $deck->cards());
-        $this->assertNotEquals($oldCards, $deck->cards());
+        $this->assertCount(54, $deck->getCards());
+        $this->assertNotEquals($oldCards, $deck->getCards());
     }
 
     /**

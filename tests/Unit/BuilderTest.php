@@ -50,7 +50,7 @@ class BuilderTest extends TestCase
 
 
         $deck = $builder->build();
-        $actualCards = $deck->cards();
+        $actualCards = $deck->getCards();
 
 
         $this->assertEquals(count($expectedCards), count($actualCards));
@@ -73,7 +73,7 @@ class BuilderTest extends TestCase
         $multiDeck = $builder->buildMultiple($count);
 
 
-        $this->assertCount(54 * $count, $multiDeck->cards());
+        $this->assertCount(54 * $count, $multiDeck->getCards());
     }
 
     /** @test */
@@ -85,7 +85,7 @@ class BuilderTest extends TestCase
         $multiDeck = $builder->buildMultiple(3);
 
 
-        $cards = $multiDeck->cards();
+        $cards = $multiDeck->getCards();
         $groupedByIdentifier = [];
         $jokers = 0;
         foreach ($cards as $card) {
@@ -113,7 +113,7 @@ class BuilderTest extends TestCase
         $deck = $builder->build();
 
 
-        $cards = $deck->cards();
+        $cards = $deck->getCards();
         $this->assertCount(52, $cards);
         $this->assertNotContains('joker', array_map(function (Card $card) { return $card->identifier(); }, $cards));
     }
@@ -127,7 +127,7 @@ class BuilderTest extends TestCase
         $deck = $builder->buildMultiple(3);
 
 
-        $cards = $deck->cards();
+        $cards = $deck->getCards();
         $this->assertCount(156, $cards);
         $this->assertNotContains('joker', array_map(function (Card $card) { return $card->identifier(); }, $cards));
     }
