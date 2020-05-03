@@ -1,6 +1,6 @@
 <?php
 
-namespace Shomisha\Cards\Tests\Unit;
+namespace Shomisha\Cards\Tests\Unit\Serializers;
 
 use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Cards\Card;
