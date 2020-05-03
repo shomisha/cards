@@ -31,6 +31,11 @@ class Player implements PlayerContract
         return $this;
     }
 
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
     public function name(): string
     {
         return $this->name;

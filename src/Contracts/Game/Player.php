@@ -5,6 +5,14 @@ namespace Shomisha\Cards\Contracts\Game;
 interface Player
 {
     /**
+     * Set the name of the player instance.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function setName(string $name);
+
+    /**
      * Returns the name of the player.
      *
      * @return string
