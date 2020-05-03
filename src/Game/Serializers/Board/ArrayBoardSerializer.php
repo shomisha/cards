@@ -4,7 +4,7 @@ namespace Shomisha\Cards\Game\Serializers\Board;
 
 use Shomisha\Cards\Contracts\Game\Board;
 use Shomisha\Cards\Contracts\Serializers\BoardSerializer;
-use Shomisha\Cards\Exceptions\InvalidSerializedBoard;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedBoard;
 use Shomisha\Cards\Game\Serializers\BoardPosition\ArrayBoardPositionSerializer;
 
 class ArrayBoardSerializer implements BoardSerializer

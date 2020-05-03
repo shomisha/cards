@@ -4,7 +4,7 @@ namespace Shomisha\Cards\Game\Serializers\Player;
 
 use Shomisha\Cards\Contracts\Game\Player;
 use Shomisha\Cards\Contracts\Serializers\PlayerSerializer;
-use Shomisha\Cards\Exceptions\InvalidSerializedPlayer;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedPlayer;
 use Shomisha\Cards\Game\Serializers\Hand\ArrayHandSerializer;
 
 class ArrayPlayerSerializer implements PlayerSerializer

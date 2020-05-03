@@ -1,6 +1,6 @@
 <?php
 
-namespace Shomisha\Cards\Exceptions;
+namespace Shomisha\Cards\Exceptions\Serialization;
 
 use Shomisha\Cards\Contracts\Game\BoardPosition;
 

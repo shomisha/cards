@@ -4,7 +4,7 @@ namespace Shomisha\Cards\Game\Serializers\Hand;
 
 use Shomisha\Cards\Contracts\Game\Hand;
 use Shomisha\Cards\Contracts\Serializers\HandSerializer;
-use Shomisha\Cards\Exceptions\InvalidSerializedHand;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedHand;
 use Shomisha\Cards\Serializers\Card\ArrayCardSerializer;
 
 class ArrayHandSerializer implements HandSerializer

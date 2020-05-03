@@ -3,7 +3,7 @@
 namespace Shomisha\Cards\Game\Serializers\Hand;
 
 use Shomisha\Cards\Contracts\Game\Hand;
-use Shomisha\Cards\Exceptions\InvalidSerializedHand;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedHand;
 
 class JsonHandSerializer extends ArrayHandSerializer
 {

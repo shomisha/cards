@@ -6,7 +6,7 @@ use Shomisha\Cards\Cards\Card;
 use Shomisha\Cards\Cards\Joker;
 use Shomisha\Cards\Contracts\Card as CardContract;
 use Shomisha\Cards\Contracts\Serializers\CardSerializer as CardSerializerContract;
-use Shomisha\Cards\Exceptions\InvalidSerializedCard;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedCard;
 use Shomisha\Cards\Suites\Suite;
 
 class ArrayCardSerializer implements CardSerializerContract

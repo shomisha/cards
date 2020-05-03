@@ -3,7 +3,7 @@
 namespace Shomisha\Cards\Serializers\Deck;
 
 use Shomisha\Cards\Contracts\Deck as DeckContract;
-use Shomisha\Cards\Exceptions\InvalidSerializedDeck;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedDeck;
 
 class JsonDeckSerializer extends ArrayDeckSerializer
 {

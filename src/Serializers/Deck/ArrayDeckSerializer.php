@@ -5,7 +5,7 @@ namespace Shomisha\Cards\Serializers\Deck;
 use Shomisha\Cards\Contracts\Deck as DeckContract;
 use Shomisha\Cards\Contracts\Serializers\DeckSerializer as DeckSerializerContract;
 use Shomisha\Cards\Decks\Deck;
-use Shomisha\Cards\Exceptions\InvalidSerializedDeck;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedDeck;
 use Shomisha\Cards\Serializers\Card\ArrayCardSerializer;
 
 class ArrayDeckSerializer implements DeckSerializerContract

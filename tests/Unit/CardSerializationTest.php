@@ -5,7 +5,7 @@ namespace Shomisha\Cards\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Cards\Card;
 use Shomisha\Cards\Cards\Joker;
-use Shomisha\Cards\Exceptions\InvalidSerializedCard;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedCard;
 use Shomisha\Cards\Serializers\Card\ArrayCardSerializer;
 use Shomisha\Cards\Serializers\Card\JsonCardSerializer;
 use Shomisha\Cards\Suites\Suite;

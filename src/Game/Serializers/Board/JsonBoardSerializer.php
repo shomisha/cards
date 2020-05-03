@@ -3,7 +3,7 @@
 namespace Shomisha\Cards\Game\Serializers\Board;
 
 use Shomisha\Cards\Contracts\Game\Board;
-use Shomisha\Cards\Exceptions\InvalidSerializedBoard;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedBoard;
 
 class JsonBoardSerializer extends ArrayBoardSerializer
 {

@@ -3,7 +3,7 @@
 namespace Shomisha\Cards\Serializers\Card;
 
 use Shomisha\Cards\Contracts\Card as CardContract;
-use Shomisha\Cards\Exceptions\InvalidSerializedCard;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedCard;
 
 class JsonCardSerializer extends ArrayCardSerializer
 {

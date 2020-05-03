@@ -3,7 +3,7 @@
 namespace Shomisha\Cards\Game\Serializers\BoardPosition;
 
 use Shomisha\Cards\Contracts\Game\BoardPosition;
-use Shomisha\Cards\Exceptions\InvalidSerializedBoardPosition;
+use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedBoardPosition;
 
 class JsonBoardPositionSerializer extends ArrayBoardPositionSerializer
 {
