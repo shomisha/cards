@@ -40,4 +40,9 @@ class InvalidSerializedPlayer extends \Exception
     {
         return new self("The serialized player 'hand' is not an array.");
     }
+
+    public static function invalidJson(): self
+    {
+        return new self("The serialized player is an invalid JSON.");
+    }
 }
