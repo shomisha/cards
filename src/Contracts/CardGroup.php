@@ -6,9 +6,17 @@ use Shomisha\Cards\Contracts\Card;
 
 interface CardGroup
 {
-    /** @return \Shomisha\Cards\Contracts\Card[] */
+    /**
+     * Returns the cards stored in this group.
+     *
+     * @return \Shomisha\Cards\Contracts\Card[]
+     */
     public function getCards(): array;
 
-    /** @param \Shomisha\Cards\Contracts\Card[] $cards */
+    /**
+     * Sets the cards to be stored in this group.
+     *
+     * @param \Shomisha\Cards\Contracts\Card[] $cards
+     */
     public function setCards(array $cards);
 }
