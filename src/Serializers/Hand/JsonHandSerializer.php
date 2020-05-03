@@ -1,6 +1,6 @@
 <?php
 
-namespace Shomisha\Cards\Game\Serializers\Hand;
+namespace Shomisha\Cards\Serializers\Hand;
 
 use Shomisha\Cards\Contracts\Game\Hand;
 use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedHand;

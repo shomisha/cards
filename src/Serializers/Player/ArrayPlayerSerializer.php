@@ -1,15 +1,15 @@
 <?php
 
-namespace Shomisha\Cards\Game\Serializers\Player;
+namespace Shomisha\Cards\Serializers\Player;
 
 use Shomisha\Cards\Contracts\Game\Player;
 use Shomisha\Cards\Contracts\Serializers\PlayerSerializer;
 use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedPlayer;
-use Shomisha\Cards\Game\Serializers\Hand\ArrayHandSerializer;
+use Shomisha\Cards\Serializers\Hand\ArrayHandSerializer;
 
 class ArrayPlayerSerializer implements PlayerSerializer
 {
-    /** @var \Shomisha\Cards\Game\Serializers\Hand\ArrayHandSerializer  */
+    /** @var \Shomisha\Cards\Serializers\Hand\ArrayHandSerializer  */
     private $handSerializer;
 
     public function __construct(ArrayHandSerializer $handSerializer)

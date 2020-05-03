@@ -1,6 +1,6 @@
 <?php
 
-namespace Shomisha\Cards\Game\Serializers\Board;
+namespace Shomisha\Cards\Serializers\Board;
 
 use Shomisha\Cards\Contracts\Game\Board;
 use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedBoard;

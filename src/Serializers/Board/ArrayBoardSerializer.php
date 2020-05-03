@@ -1,15 +1,15 @@
 <?php
 
-namespace Shomisha\Cards\Game\Serializers\Board;
+namespace Shomisha\Cards\Serializers\Board;
 
 use Shomisha\Cards\Contracts\Game\Board;
 use Shomisha\Cards\Contracts\Serializers\BoardSerializer;
 use Shomisha\Cards\Exceptions\Serialization\InvalidSerializedBoard;
-use Shomisha\Cards\Game\Serializers\BoardPosition\ArrayBoardPositionSerializer;
+use Shomisha\Cards\Serializers\BoardPosition\ArrayBoardPositionSerializer;
 
 class ArrayBoardSerializer implements BoardSerializer
 {
-    /** @var \Shomisha\Cards\Game\Serializers\BoardPosition\ArrayBoardPositionSerializer  */
+    /** @var \Shomisha\Cards\Serializers\BoardPosition\ArrayBoardPositionSerializer  */
     private $positionSerializer;
 
     public function __construct(ArrayBoardPositionSerializer $positionSerializer)
