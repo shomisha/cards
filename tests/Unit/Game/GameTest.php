@@ -95,6 +95,7 @@ class GameTest extends TestCase
         $move = \Mockery::mock(Move::class);
 
         $validateExpectation = $game->shouldReceive('validateMove')->with($move);
+        $hasEndedExpectation = $game->shouldReceive('hasEnded')->andReturn(false);
         $initiateNextMoveExpectation = $game->shouldReceive('initiateNextMove');
 
         $preEffectsExpectation = $move->shouldReceive('hasPreApplicationEffects')->andReturn(false);
@@ -105,7 +106,8 @@ class GameTest extends TestCase
         $game->advance($move);
 
 
-        $validateExpectation->verify();;
+        $validateExpectation->verify();
+        $hasEndedExpectation->verify();
         $initiateNextMoveExpectation->verify();
 
         $preEffectsExpectation->verify();
@@ -121,6 +123,7 @@ class GameTest extends TestCase
     {
         $game = $this->getGame(['validateMove', 'initiateNextMove']);
         $game->shouldReceive('validateMove');
+        $game->shouldReceive('hasEnded')->andReturn(false);
         $game->shouldReceive('initiateNextMove');
 
         $move = \Mockery::mock(Move::class);
