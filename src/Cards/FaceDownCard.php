@@ -6,9 +6,12 @@ use Shomisha\Cards\Contracts\Card as CardContract;
 use Shomisha\Cards\Contracts\Suite as SuiteContract;
 use Shomisha\Cards\Enums\CardSide;
 use Shomisha\Cards\Suites\Suite;
+use Shomisha\Cards\Traits\Identifiable;
 
 class FaceDownCard implements CardContract
 {
+    use Identifiable;
+
     /** @var \Shomisha\Cards\Cards\Card */
     private $card;
 

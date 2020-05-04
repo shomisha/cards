@@ -11,9 +11,12 @@ use Shomisha\Cards\Contracts\Game\Move;
 use Shomisha\Cards\Contracts\Game\Player;
 use Shomisha\Cards\Decks\Deck;
 use Shomisha\Cards\Exceptions\EndGameException;
+use Shomisha\Cards\Traits\Identifiable;
 
 abstract class Game implements GameContract
 {
+    use Identifiable;
+
     /** @var \Shomisha\Cards\Contracts\Game\Board */
     protected $board;
 

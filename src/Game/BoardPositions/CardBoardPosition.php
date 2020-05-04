@@ -4,9 +4,12 @@ namespace Shomisha\Cards\Game\BoardPositions;
 
 use Shomisha\Cards\Contracts\Game\BoardPosition;
 use Shomisha\Cards\Contracts\Card;
+use Shomisha\Cards\Traits\Identifiable;
 
 class CardBoardPosition implements BoardPosition
 {
+    use Identifiable;
+
     /** @var Card */
     protected $card;
 

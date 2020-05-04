@@ -4,9 +4,12 @@ namespace Shomisha\Cards\Cards;
 
 use Shomisha\Cards\Contracts\Card as CardContract;
 use Shomisha\Cards\Contracts\Suite;
+use Shomisha\Cards\Traits\Identifiable;
 
 class Card implements CardContract
 {
+    use Identifiable;
+
     /** @var string */
     private $rank;
 

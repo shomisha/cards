@@ -4,9 +4,12 @@ namespace Shomisha\Cards\Game;
 
 use Shomisha\Cards\Contracts\Game\Hand;
 use Shomisha\Cards\Contracts\Game\Player as PlayerContract;
+use Shomisha\Cards\Traits\Identifiable;
 
 class Player implements PlayerContract
 {
+    use Identifiable;
+
     /** @var string */
     protected $name;
 

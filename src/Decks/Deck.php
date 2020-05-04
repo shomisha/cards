@@ -4,9 +4,12 @@ namespace Shomisha\Cards\Decks;
 
 use Shomisha\Cards\CardGroups\CardStack;
 use Shomisha\Cards\Contracts\Deck as DeckContract;
+use Shomisha\Cards\Traits\Identifiable;
 
 class Deck extends CardStack implements DeckContract
 {
+    use Identifiable;
+
     public function split(int $position = -1): array
     {
         if ($position == -1) {
