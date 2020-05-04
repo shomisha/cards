@@ -2,21 +2,13 @@
 
 namespace Shomisha\Cards\Exceptions\Serialization;
 
-class InvalidSerializedCard extends \Exception
+class InvalidSerializedCard extends SerializationException
 {
-    public static function missingIdKey(): self
-    {
-        return new self("The serialized card is missing the 'id' key.");
-    }
-
-    public static function idNotString(): self
-    {
-        return new self("The serialized card 'id' is not a string.");
-    }
+    protected static $serializes = 'card';
 
     public static function missingSuite(): self
     {
-        return new static('The serialized card is missing a suite');
+        return self::missingKey('suite');
     }
 
     public static function invalidSuite(string $suite): self
@@ -26,16 +18,11 @@ class InvalidSerializedCard extends \Exception
 
     public static function missingValue(): self
     {
-        return new static('The serialized card is missing a value');
+        return self::missingKey('value');
     }
 
     public static function invalidValue($value): self
     {
         return new static("The serialized card contains an invalid value: {$value}");
-    }
-
-    public static function invalidJson(): self
-    {
-        return new self("The serialized card is an invalid JSON.");
     }
 }

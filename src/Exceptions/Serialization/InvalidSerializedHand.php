@@ -4,21 +4,13 @@ namespace Shomisha\Cards\Exceptions\Serialization;
 
 use Shomisha\Cards\Contracts\Game\Hand;
 
-class InvalidSerializedHand extends \Exception
+class InvalidSerializedHand extends SerializationException
 {
-    public static function missingId(): self
-    {
-        return new self("The serialized hand is missing the 'id' key.");
-    }
-
-    public static function idNotString(): self
-    {
-        return new self("The serialized hand 'id' is not a string.");
-    }
+    protected static $serializes = 'card';
 
     public static function missingTypeKey(): self
     {
-        return new self("The serialized hand is missing a 'type' key.");
+        return self::missingKey('type');
     }
 
     public static function typeDoesNotExist(): self
@@ -33,16 +25,11 @@ class InvalidSerializedHand extends \Exception
 
     public static function missingCards(): self
     {
-        return new self("The serialized hand is missing the 'cards' key");
+        return self::missingKey('cards');
     }
 
     public static function cardsNotAnArray(): self
     {
-        return new self("The serialized hand 'cards' key is not an array.");
-    }
-
-    public static function invalidJson(): self
-    {
-        return new self("The serialized hand is not a valid JSON.");
+        return self::keyNotType('cards', 'array');
     }
 }

@@ -4,21 +4,13 @@ namespace Shomisha\Cards\Exceptions\Serialization;
 
 use Shomisha\Cards\Contracts\Game\Board;
 
-class InvalidSerializedBoard extends \Exception
+class InvalidSerializedBoard extends SerializationException
 {
-    public static function missingIdKey(): self
-    {
-        return new self("The serialized board is missing the 'id' key.");
-    }
-
-    public static function idNotString(): self
-    {
-        return new self("The serialized board 'id' is not a string.");
-    }
+    protected static $serializes = 'board';
 
     public static function missingTypeKey(): self
     {
-        return new self("The serialized board is missing a 'type' key.");
+        return self::missingKey('type');
     }
 
     public static function typeDoesNotExist(): self
@@ -33,16 +25,11 @@ class InvalidSerializedBoard extends \Exception
 
     public static function missingPositions(): self
     {
-        return new self("The serialized board is missing positions.");
+        return self::missingKey('positions');
     }
 
     public static function positionsNotAnArray(): self
     {
-        return new self("The serialized board 'positions' key does not contain an array.");
-    }
-
-    public static function invalidJson(): self
-    {
-        return new self("The serialized board is an invalid JSON.");
+        return self::keyNotType('positions', 'array');
     }
 }

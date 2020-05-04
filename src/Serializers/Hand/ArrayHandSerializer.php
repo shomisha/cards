@@ -56,7 +56,7 @@ class ArrayHandSerializer implements HandSerializer
     protected function validateSerialized(array $serialized)
     {
         if (!array_key_exists('id', $serialized)) {
-            throw InvalidSerializedHand::missingId();
+            throw InvalidSerializedHand::missingIdKey();
         }
 
         if (!is_string($serialized['id'])) {

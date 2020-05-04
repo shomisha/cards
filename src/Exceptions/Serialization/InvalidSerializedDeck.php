@@ -2,30 +2,17 @@
 
 namespace Shomisha\Cards\Exceptions\Serialization;
 
-class InvalidSerializedDeck extends \Exception
+class InvalidSerializedDeck extends SerializationException
 {
-    public static function missingIdKey()
-    {
-        return new self("The serialized deck is missing the 'id' key.");
-    }
-
-    public static function idNotString(): self
-    {
-        return new self("The serialized deck 'id' is not a string.");
-    }
+    protected static $serializes = 'deck';
 
     public static function missingCards(): self
     {
-        return new static("The serialized deck is missing the cards key.");
+        return self::missingKey('cards');
     }
 
     public static function cardsNotArray(): self
     {
-        return new self("The serialized deck 'cards' is not an array.");
-    }
-
-    public static function invalidJson(): self
-    {
-        return new static("The serialized deck is an invalid JSON.");
+        return self::keyNotType('cards', 'array');
     }
 }
