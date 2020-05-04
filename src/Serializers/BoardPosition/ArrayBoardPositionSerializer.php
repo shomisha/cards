@@ -43,7 +43,7 @@ class ArrayBoardPositionSerializer implements BoardPositionSerializer
         }
 
         /** @var \Shomisha\Cards\Contracts\Game\BoardPosition $position */
-        $position = new $serialized['position'];
+        $position = new $serialized['type'];
 
         $position->setCards($cards);
 
