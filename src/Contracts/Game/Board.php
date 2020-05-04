@@ -2,7 +2,9 @@
 
 namespace Shomisha\Cards\Contracts\Game;
 
-interface Board
+use Shomisha\Cards\Contracts\Identifiable;
+
+interface Board extends Identifiable
 {
     /**
      * Initialize all of the positions on the board.

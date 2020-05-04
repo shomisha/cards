@@ -2,7 +2,7 @@
 
 namespace Shomisha\Cards\Contracts;
 
-interface Card
+interface Card extends Identifiable
 {
     const RANKS = [
         1 => 'Ace',

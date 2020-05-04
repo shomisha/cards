@@ -2,7 +2,7 @@
 
 namespace Shomisha\Cards\Contracts;
 
-interface Deck extends CardGroup
+interface Deck extends CardGroup, Identifiable
 {
     /**
      * Draws the card from the top of the deck stack.

@@ -2,7 +2,9 @@
 
 namespace Shomisha\Cards\Contracts\Game;
 
-interface Player
+use Shomisha\Cards\Contracts\Identifiable;
+
+interface Player extends Identifiable
 {
     /**
      * Set the name of the player instance.

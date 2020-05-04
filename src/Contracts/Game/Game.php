@@ -3,8 +3,9 @@
 namespace Shomisha\Cards\Contracts\Game;
 
 use Shomisha\Cards\Contracts\Deck;
+use Shomisha\Cards\Contracts\Identifiable;
 
-interface Game
+interface Game extends Identifiable
 {
     /**
      * Initialize the game and initiate the first move.
