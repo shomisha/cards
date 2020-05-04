@@ -6,6 +6,16 @@ use Shomisha\Cards\Contracts\Game\Hand;
 
 class InvalidSerializedHand extends \Exception
 {
+    public static function missingId(): self
+    {
+        return new self("The serialized hand is missing the 'id' key.");
+    }
+
+    public static function idNotString(): self
+    {
+        return new self("The serialized hand 'id' is not a string.");
+    }
+
     public static function missingTypeKey(): self
     {
         return new self("The serialized hand is missing a 'type' key.");

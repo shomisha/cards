@@ -20,6 +20,7 @@ class ArrayHandSerializer implements HandSerializer
     public function serialize(Hand $hand)
     {
         $type = get_class($hand);
+        $id = $hand->getId();
 
         $cards = [];
 
@@ -28,6 +29,7 @@ class ArrayHandSerializer implements HandSerializer
         }
 
         return [
+            'id' => $id,
             'type' => $type,
             'cards' => $cards,
         ];
@@ -44,6 +46,7 @@ class ArrayHandSerializer implements HandSerializer
 
         /** @var \Shomisha\Cards\Contracts\Game\Hand $hand */
         $hand = new $serialized['type'];
+        $hand->setId($serialized['id']);
 
         $hand->setCards($cards);
 
@@ -52,6 +55,14 @@ class ArrayHandSerializer implements HandSerializer
 
     protected function validateSerialized(array $serialized)
     {
+        if (!array_key_exists('id', $serialized)) {
+            throw InvalidSerializedHand::missingId();
+        }
+
+        if (!is_string($serialized['id'])) {
+            throw InvalidSerializedHand::idNotString();
+        }
+
         if (!array_key_exists('type', $serialized)) {
             throw InvalidSerializedHand::missingTypeKey();
         }

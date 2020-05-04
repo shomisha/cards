@@ -27,17 +27,18 @@ class ArrayDeckSerializer implements DeckSerializerContract
             $serialized[] = $this->cardSerializer->serialize($card);
         }
 
+        $id = $deck->getId();
+
         return [
-            'cards' => $serialized
+            'id' => $id,
+            'cards' => $serialized,
         ];
     }
 
     /** @param array $serialized */
     public function unserialize($serialized): DeckContract
     {
-        if (!array_key_exists('cards', $serialized)) {
-            throw InvalidSerializedDeck::missingCards();
-        }
+        $this->validateSerialized($serialized);
 
         $cards = [];
 
@@ -45,6 +46,28 @@ class ArrayDeckSerializer implements DeckSerializerContract
             $cards[] = $this->cardSerializer->unserialize($serializedCard);
         }
 
-        return new Deck($cards);
+        $deck =  new Deck($cards);
+        $deck->setId($serialized['id']);
+
+        return $deck;
+    }
+
+    protected function validateSerialized(array $serialized)
+    {
+        if (!array_key_exists('id', $serialized)) {
+            throw InvalidSerializedDeck::missingIdKey();
+        }
+
+        if (!is_string($serialized['id'])) {
+            throw InvalidSerializedDeck::idNotKey();
+        }
+
+        if (!array_key_exists('cards', $serialized)) {
+            throw InvalidSerializedDeck::missingCards();
+        }
+
+        if (!is_array($serialized['cards'])) {
+            throw InvalidSerializedDeck::cardsNotArray();
+        }
     }
 }

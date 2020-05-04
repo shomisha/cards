@@ -27,7 +27,10 @@ class ArrayBoardSerializer implements BoardSerializer
             $positions[$name] = $this->positionSerializer->serialize($position);
         }
 
+        $id = $board->getId();
+
         return [
+            'id' => $id,
             'type' => $type,
             'positions' => $position,
         ];
@@ -39,6 +42,7 @@ class ArrayBoardSerializer implements BoardSerializer
 
         /** @var \Shomisha\Cards\Contracts\Game\Board $board */
         $board = new $serialized['type'];
+        $board->setId($serialized['id']);
 
         foreach ($serialized['positions'] as $name => $position) {
             $board->putOn($name, $this->positionSerializer->unserialize($position));
@@ -49,6 +53,14 @@ class ArrayBoardSerializer implements BoardSerializer
 
     protected function validateSerialized(array $serialized)
     {
+        if (!array_key_exists('id', $serialized)) {
+            throw InvalidSerializedBoard::missingIdKey();
+        }
+
+        if (!is_string($serialized['id'])) {
+            throw InvalidSerializedBoard::idNotString();
+        }
+
         if (!array_key_exists('type', $serialized)) {
             throw InvalidSerializedBoard::missingTypeKey();
         }

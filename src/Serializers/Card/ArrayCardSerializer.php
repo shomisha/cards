@@ -15,6 +15,7 @@ class ArrayCardSerializer implements CardSerializerContract
     public function serialize(CardContract $card)
     {
         return [
+            'id'    => $card->getId(),
             'suite' => $card->suite()->name(),
             'value' => $card->value(),
         ];
@@ -26,7 +27,7 @@ class ArrayCardSerializer implements CardSerializerContract
         $this->validateSerialized($serialized);
 
         if ($this->isJoker($serialized)) {
-            return $this->newJoker();
+            return $this->unserializeJoker($serialized);
         }
 
         return $this->unserializeCard($serialized);
@@ -34,6 +35,14 @@ class ArrayCardSerializer implements CardSerializerContract
 
     private function validateSerialized(array $serialized)
     {
+        if (!array_key_exists('id', $serialized)) {
+            throw InvalidSerializedCard::missingIdKey();
+        }
+
+        if (!is_string($serialized['id'])) {
+            throw InvalidSerializedCard::idNotString();
+        }
+
         if (!array_key_exists('suite', $serialized)) {
             throw InvalidSerializedCard::missingSuite();
         }
@@ -57,13 +66,19 @@ class ArrayCardSerializer implements CardSerializerContract
         return $serialized['suite'] == Suite::JOKER();
     }
 
-    private function newJoker(): Joker
+    private function unserializeJoker(array $serialized): Joker
     {
-        return new Joker();
+        $joker = new Joker();
+        $joker->setId($serialized['id']);
+
+        return $joker;
     }
 
     private function unserializeCard(array $serialized): Card
     {
-        return new Card(Suite::fromString($serialized['suite']), $serialized['value']);
+        $card = new Card(Suite::fromString($serialized['suite']), $serialized['value']);
+        $card->setId($serialized['id']);
+
+        return $card;
     }
 }

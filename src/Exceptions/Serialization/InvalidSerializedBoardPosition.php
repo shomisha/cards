@@ -6,6 +6,16 @@ use Shomisha\Cards\Contracts\Game\BoardPosition;
 
 class InvalidSerializedBoardPosition extends \Exception
 {
+    public static function missingIdKey(): self
+    {
+        return new self("The serialized board position is missing the 'id' key.");
+    }
+
+    public static function idNotString(): self
+    {
+        return new self("The serialized board position 'id' is not a string.");
+    }
+
     public static function missingTypeKey(): self
     {
         return new self("The serialized board position is missing a 'type' key.");

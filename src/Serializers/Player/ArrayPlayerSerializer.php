@@ -19,6 +19,7 @@ class ArrayPlayerSerializer implements PlayerSerializer
 
     public function serialize(Player $player)
     {
+        $id = $player->getId();
         $name = $player->name();
         $type = get_class($player);
 
@@ -27,6 +28,7 @@ class ArrayPlayerSerializer implements PlayerSerializer
         }
 
         return [
+            'id'   => $id,
             'type' => $type,
             'name' => $name,
             'hand' => $hand,
@@ -43,6 +45,7 @@ class ArrayPlayerSerializer implements PlayerSerializer
         /** @var Player $player */
         $player = new $serialized['type'];
 
+        $player->setId($serialized['id']);
         $player->setHand($hand);
         $player->setName($serialized['name']);
 
@@ -51,6 +54,14 @@ class ArrayPlayerSerializer implements PlayerSerializer
 
     protected function validateSerialized(array $serialized)
     {
+        if (!array_key_exists('id', $serialized)) {
+            throw InvalidSerializedPlayer::missingIdKey();
+        }
+
+        if (!is_string($serialized['id'])) {
+            throw InvalidSerializedPlayer::idNotString();
+        }
+
         if (!array_key_exists('type', $serialized)) {
             throw InvalidSerializedPlayer::missingType();
         }

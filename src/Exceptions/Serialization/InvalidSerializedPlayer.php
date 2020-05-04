@@ -6,6 +6,16 @@ use Shomisha\Cards\Contracts\Game\Player;
 
 class InvalidSerializedPlayer extends \Exception
 {
+    public static function missingIdKey(): self
+    {
+        return new self("The serialized player is missing the 'id' key.");
+    }
+
+    public static function idNotString(): self
+    {
+        return new self("The serialized player 'id' is not a string.");
+    }
+
     public static function missingType(): self
     {
         return new self("The serialized player is missing a 'type' key.");
