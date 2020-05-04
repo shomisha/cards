@@ -33,7 +33,11 @@ class CardSerializationTest extends TestCase
 
 
         $this->assertIsArray($serialized);
-        $this->assertEquals(['suite' => 'hearts', 'value' => 7], $serialized);
+        $this->assertEquals([
+            'id' => $card->getId(),
+            'suite' => 'hearts',
+            'value' => 7,
+        ], $serialized);
     }
 
     /** @test */
@@ -47,35 +51,53 @@ class CardSerializationTest extends TestCase
 
 
         $this->assertIsArray($serialized);
-        $this->assertEquals(['suite' => 'joker', 'value' => 15], $serialized);
+        $this->assertEquals([
+            'id' => $joker->getId(),
+            'suite' => 'joker',
+            'value' => 15
+        ], $serialized);
     }
 
     /** @test */
     public function cards_can_be_unserialized_from_arrays()
     {
-        $serialized = ['suite' => 'hearts', 'value' => 7];
+        $serialized = [
+            'id' => 'some-uuid',
+            'suite' => 'hearts',
+            'value' => 7,
+        ];
         $serializer = $this->getArraySerializer();
 
 
-        $card = $serializer->unserialize($serialized);
+        $actualCard = $serializer->unserialize($serialized);
 
 
-        $this->assertInstanceOf(Card::class, $card);
-        $this->assertEquals('hearts-7', $card->identifier());
+        $this->assertInstanceOf(Card::class, $actualCard);
+
+        $expectedCard = new Card(Suite::HEARTS(), 7);
+        $expectedCard->setId('some-uuid');
+        $this->assertEquals($expectedCard, $actualCard);
     }
 
     /** @test */
     public function jokers_can_be_unserialized_from_arrays()
     {
-        $serialized = ['suite' => 'joker', 'value' => 15];
+        $serialized = [
+            'id' => 'some-uuid',
+            'suite' => 'joker',
+            'value' => 15
+        ];
         $serializer = $this->getArraySerializer();
 
 
-        $joker = $serializer->unserialize($serialized);
+        $actualJoker = $serializer->unserialize($serialized);
 
 
-        $this->assertInstanceOf(Joker::class, $joker);
-        $this->assertEquals('joker', $joker->identifier());
+        $this->assertInstanceOf(Joker::class, $actualJoker);
+
+        $expectedJoker = new Joker();
+        $expectedJoker->setId('some-uuid');
+        $this->assertEquals($expectedJoker, $actualJoker);
     }
 
     /** @test */
@@ -145,7 +167,11 @@ class CardSerializationTest extends TestCase
         $this->assertJson($json);
 
         $jsonData = json_decode($json, true);
-        $this->assertEquals(['suite' => 'hearts', 'value' => 7], $jsonData);
+        $this->assertEquals([
+            'id' => $card->getId(),
+            'suite' => 'hearts'
+            , 'value' => 7
+        ], $jsonData);
     }
 
     /** @test */
@@ -153,6 +179,7 @@ class CardSerializationTest extends TestCase
     {
         $json = '
             {
+                "id": "some-uuid",
                 "suite": "hearts",
                 "value": 7
             }        
@@ -160,11 +187,14 @@ class CardSerializationTest extends TestCase
         $serializer = $this->getJsonSerializer();
 
 
-        $card = $serializer->unserialize($json);
+        $actualCard = $serializer->unserialize($json);
 
 
-        $this->assertInstanceOf(Card::class, $card);
-        $this->assertEquals("hearts-7", $card->identifier());
+        $this->assertInstanceOf(Card::class, $actualCard);
+
+        $expectedCard = new Card(Suite::HEARTS(), 7);
+        $expectedCard->setId('some-uuid');
+        $this->assertEquals($expectedCard, $actualCard);
     }
 
     /** @test */

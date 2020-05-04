@@ -34,25 +34,35 @@ class DeckSerializationTest extends TestCase
 
 
         $this->assertIsArray($serializedDeck);
+        $this->assertEquals($deck->getId(), $serializedDeck['id']);
+
         $this->assertArrayHasKey('cards', $serializedDeck);
         $this->assertCount(54, $serializedDeck['cards']);
-        $this->assertEquals(['suite' => 'clubs', 'value' => 1], $serializedDeck['cards'][0]);
+        $this->assertEquals([
+            'id' => $deck->peek(0)->getId(),
+            'suite' => 'clubs',
+            'value' => 1
+        ], $serializedDeck['cards'][0]);
     }
 
     /** @test */
     public function decks_can_be_unserialized_from_arrays()
     {
         $serializedDeck = [
+            'id' => 'some-uuid',
             'cards' => [
                 [
+                    'id' => 'card-1-id',
                     'suite' => 'clubs',
                     'value' => 1,
                 ],
                 [
+                    'id' => 'card-2-id',
                     'suite' => 'clubs',
                     'value' => 2,
                 ],
                 [
+                    'id' => 'card-3-id',
                     'suite' => 'clubs',
                     'value' => 3,
                 ],
@@ -65,6 +75,7 @@ class DeckSerializationTest extends TestCase
 
 
         $this->assertInstanceOf(Deck::class, $unserializedDeck);
+        $this->assertEquals('some-uuid', $unserializedDeck->getId());
 
         $unserializedCards = $unserializedDeck->getCards();
         $this->assertCount(3, $unserializedCards);
@@ -91,6 +102,7 @@ class DeckSerializationTest extends TestCase
     public function serialized_decks_with_invalidly_serialized_cards_cannot_be_unserialized()
     {
         $serializedDeck = [
+            'id' => 'deck-uuid',
             'cards' => [
                 [
                     'value' => 1,
@@ -120,25 +132,36 @@ class DeckSerializationTest extends TestCase
 
 
         $this->assertJson($serializedDeck);
+
         $jsonData = json_decode($serializedDeck, true);
+        $this->assertEquals($deck->getId(), $jsonData['id']);
+
         $this->assertArrayHasKey('cards', $jsonData);
-        $this->assertEquals(['suite' => 'clubs', 'value' => 1], $jsonData['cards'][0]);
+        $this->assertEquals([
+            'id' => $deck->peek(0)->getId(),
+            'suite' => 'clubs',
+            'value' => 1
+        ], $jsonData['cards'][0]);
     }
 
     /** @test */
     public function decks_can_be_unserialized_from_json()
     {
         $serializedDeck = '{
+            "id": "deck-uuid",
             "cards": [
                 {
+                    "id": "card-1-uuid",
                     "suite": "clubs",
                     "value": 1
                 },
                 {
+                    "id": "card-2-uuid",
                     "suite": "clubs",
                     "value": 2
                 },
                 {
+                    "id": "card-3-uuid",
                     "suite": "clubs",
                     "value": 3
                 }
@@ -151,6 +174,8 @@ class DeckSerializationTest extends TestCase
 
 
         $this->assertInstanceOf(Deck::class, $unserializedDeck);
+        $this->assertEquals('deck-uuid', $unserializedDeck->getId());
+        $this->assertCount(3, $unserializedDeck->getCards());
     }
 
     /** @test */

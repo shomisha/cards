@@ -37,9 +37,11 @@ class BoardPositionSerializationTest extends TestCase
 
 
         $this->assertEquals([
+            'id' => $position->getId(),
             'type' => CardBoardPosition::class,
             'cards' => [
                 0 => [
+                    'id'    => $card->getId(),
                     'suite' => 'joker',
                     'value' => 15,
                 ],
@@ -51,9 +53,11 @@ class BoardPositionSerializationTest extends TestCase
     public function board_position_can_be_unserialized_from_array()
     {
         $serialized = [
+            'id' => 'some-uuid',
             'type' => CardBoardPosition::class,
             'cards' => [
                 0 => [
+                    'id' => 'some-uuid',
                     'suite' => Suite::SPADES()->name(),
                     'value' => 1
                 ],
@@ -66,13 +70,14 @@ class BoardPositionSerializationTest extends TestCase
 
 
         $this->assertInstanceOf(CardBoardPosition::class, $position);
-        $this->assertEquals(new Card(Suite::SPADES(), 1), $position->take());
+        $this->assertEquals((new Card(Suite::SPADES(), 1))->identifier(), $position->take()->identifier());
     }
 
     /** @test */
     public function board_position_will_be_unserialized_to_exact_class()
     {
         $serialized = [
+            'id' => 'some-uuid',
             'type' => StackBoardPosition::class,
             'cards' => []
         ];
@@ -89,13 +94,16 @@ class BoardPositionSerializationTest extends TestCase
     public function unserialized_board_position_will_retain_card_positions()
     {
         $serialized = [
+            'id' => 'some-uuid',
             'type' => StackBoardPosition::class,
             'cards' => [
                 'joker' => [
+                    'id' => 'another-uuid',
                     'suite' => 'joker',
                     'value' => 15,
                 ],
                 'queen-of-hearts' => [
+                    'id' => 'too-cool-for-an-id',
                     'suite' => 'hearts',
                     'value' => 13,
                 ],
@@ -108,9 +116,13 @@ class BoardPositionSerializationTest extends TestCase
 
 
         $this->assertInstanceOf(StackBoardPosition::class, $position);
+        $this->assertEquals('some-uuid', $position->getId());
+
+        $expectedJoker = (new Joker())->setId('another-uuid');
+        $expectedQueen = (new Card(Suite::HEARTS(), 13))->setId('too-cool-for-an-id');
         $this->assertEquals([
-            'joker' => new Joker(),
-            'queen-of-hearts' => new Card(Suite::HEARTS(), 13),
+            'joker' => $expectedJoker,
+            'queen-of-hearts' => $expectedQueen,
         ], $position->getCards());
     }
 
@@ -223,9 +235,11 @@ class BoardPositionSerializationTest extends TestCase
         $this->assertJson($serialized);
         $jsonData = json_decode($serialized, true);
         $this->assertEquals([
+            'id' => $boardPosition->getId(),
             'type' => CardBoardPosition::class,
             'cards' => [
                 0 => [
+                    'id' => $card->getId(),
                     'suite' => 'joker',
                     'value' => 15,
                 ],
