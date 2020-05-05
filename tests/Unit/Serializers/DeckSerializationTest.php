@@ -83,18 +83,69 @@ class DeckSerializationTest extends TestCase
     }
 
     /** @test */
-    public function invalidly_serialized_decks_cannot_be_unserialized()
+    public function serialized_decks_without_ids_cannot_be_serialized_to_decks()
     {
         $serializedDeck = [
-            'no-cards' => [
+            'cards' => [
+                'id' => 'card-uuid',
                 'value' => 1,
                 'suite' => 'clubs',
             ]
         ];
         $this->expectException(InvalidSerializedDeck::class);
+
+
         $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serializedDeck);
+    }
+
+    /** @test */
+    public function serialized_decks_with_invalid_ids_cannot_be_serialized_to_decks()
+    {
+        $serializedDeck = [
+            'id' => false,
+            'cards' => [
+                'id' => 'card-uuid',
+                'value' => 1,
+                'suite' => 'clubs',
+            ]
+        ];
+        $this->expectException(InvalidSerializedDeck::class);
 
 
+        $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serializedDeck);
+    }
+
+    /** @test */
+    public function serialized_decks_without_cards_cannot_be_serialized_to_decks()
+    {
+        $serializedDeck = [
+            'id' => 'deck-uuid',
+            'no-cards' => [
+                'id' => 'card-uuid',
+                'value' => 1,
+                'suite' => 'clubs',
+            ],
+        ];
+        $this->expectException(InvalidSerializedDeck::class);
+
+
+        $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serializedDeck);
+    }
+
+    /** @test */
+    public function serialized_decks_with_non_array_cards_cannot_be_serialized_to_decks()
+    {
+        $serializedDeck = [
+            'id' => 'deck-uuid',
+            'cards' => 'I should be an array',
+        ];
+        $this->expectException(InvalidSerializedDeck::class);
+
+
+        $serializer = $this->getArraySerializer();
         $serializer->unserialize($serializedDeck);
     }
 
@@ -105,6 +156,7 @@ class DeckSerializationTest extends TestCase
             'id' => 'deck-uuid',
             'cards' => [
                 [
+                    'id' => 'card-uuid',
                     'value' => 1,
                     'suite' => 'clubs',
                 ],

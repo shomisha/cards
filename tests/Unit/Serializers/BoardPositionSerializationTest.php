@@ -127,15 +127,69 @@ class BoardPositionSerializationTest extends TestCase
     }
 
     /** @test */
-    public function board_position_cannot_be_unserialized_without_type()
+    public function serialized_board_position_cannot_be_unserialized_without_id()
     {
         $serialized = [
+            'type' => StackBoardPosition::class,
             'cards' => [
                 'joker' => [
+                    'id' => 'another-uuid',
                     'suite' => 'joker',
                     'value' => 15,
                 ],
                 'queen-of-hearts' => [
+                    'id' => 'too-cool-for-an-id',
+                    'suite' => 'hearts',
+                    'value' => 13,
+                ],
+            ]
+        ];
+        $this->expectException(InvalidSerializedBoardPosition::class);
+
+
+        $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serialized);
+    }
+
+    /** @test */
+    public function serialized_board_position_cannot_be_unserialized_with_invalid_id()
+    {
+        $serialized = [
+            'id' => 42,
+            'type' => StackBoardPosition::class,
+            'cards' => [
+                'joker' => [
+                    'id' => 'another-uuid',
+                    'suite' => 'joker',
+                    'value' => 15,
+                ],
+                'queen-of-hearts' => [
+                    'id' => 'too-cool-for-an-id',
+                    'suite' => 'hearts',
+                    'value' => 13,
+                ],
+            ]
+        ];
+        $this->expectException(InvalidSerializedBoardPosition::class);
+
+
+        $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serialized);
+    }
+
+    /** @test */
+    public function board_position_cannot_be_unserialized_without_type()
+    {
+        $serialized = [
+            'id' => 'board-position-uuid',
+            'cards' => [
+                'joker' => [
+                    'id' => 'joker-uuid',
+                    'suite' => 'joker',
+                    'value' => 15,
+                ],
+                'queen-of-hearts' => [
+                    'id' => 'queen-uuid',
                     'suite' => 'hearts',
                     'value' => 13,
                 ],
@@ -152,13 +206,16 @@ class BoardPositionSerializationTest extends TestCase
     public function board_position_cannot_be_unserialized_using_type_that_does_not_exist()
     {
         $serialized = [
+            'id' => 'board-position-uuid',
             'type' => 'invalid-type',
             'cards' => [
                 'joker' => [
+                    'id' => 'joker-uuid',
                     'suite' => 'joker',
                     'value' => 15,
                 ],
                 'queen-of-hearts' => [
+                    'id' => 'queen-uuid',
                     'suite' => 'hearts',
                     'value' => 13,
                 ],
@@ -175,13 +232,16 @@ class BoardPositionSerializationTest extends TestCase
     public function board_position_cannot_be_unserialized_using_type_that_does_not_implement_board_position()
     {
         $serialized = [
+            'id' => 'board-position-uuid',
             'type' => Card::class,
             'cards' => [
                 'joker' => [
+                    'id' => 'joker-uuid',
                     'suite' => 'joker',
                     'value' => 15,
                 ],
                 'queen-of-hearts' => [
+                    'id' => 'queen-uuid',
                     'suite' => 'hearts',
                     'value' => 13,
                 ],
@@ -198,6 +258,7 @@ class BoardPositionSerializationTest extends TestCase
     public function board_position_cannot_be_unserialized_without_cards()
     {
         $serialized = [
+            'id' => 'board-position-uuid',
             'type' => StackBoardPosition::class,
         ];
         $this->expectException(InvalidSerializedBoardPosition::class);
@@ -211,6 +272,7 @@ class BoardPositionSerializationTest extends TestCase
     public function board_position_cannot_be_unserialized_using_invalid_cards()
     {
         $serialized = [
+            'id' => 'board-position-uuid',
             'type' => StackBoardPosition::class,
             'cards' => 'not-an-array',
         ];

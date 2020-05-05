@@ -101,9 +101,39 @@ class CardSerializationTest extends TestCase
     }
 
     /** @test */
+    public function serialized_cards_without_ids_cannot_be_unserialized_to_cards()
+    {
+        $serialized = [
+            'suite' => 'hearts',
+            'value' => 7,
+        ];
+        $this->expectException(InvalidSerializedCard::class);
+
+
+        $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serialized);
+    }
+
+    /** @test */
+    public function serialized_cards_with_invalid_ids_cannot_be_unserialized_to_cards()
+    {
+        $serialized = [
+            'id' => 7,
+            'suite' => 'hearts',
+            'value' => 7,
+        ];
+        $this->expectException(InvalidSerializedCard::class);
+
+
+        $serializer = $this->getArraySerializer();
+        $serializer->unserialize($serialized);
+    }
+
+    /** @test */
     public function serialized_cards_without_suites_cannot_be_serialized_to_cards()
     {
         $serialized = [
+            'id' => 'card-uuid',
             'value' => 13,
         ];
         $this->expectException(InvalidSerializedCard::class);
@@ -117,6 +147,7 @@ class CardSerializationTest extends TestCase
     public function serialized_cards_with_invalid_suites_cannot_be_unserialized_to_cards()
     {
         $serialized = [
+            'id' => 'card-uuid',
             'value' => 13,
             'suite' => 'invalid-suite',
         ];
@@ -131,6 +162,7 @@ class CardSerializationTest extends TestCase
     public function serialized_cards_without_value_cannot_be_unserialized_to_cards()
     {
         $serialized = [
+            'id' => 'card-uuid',
             'suite' => 'hearts',
         ];
         $this->expectException(InvalidSerializedCard::class);
@@ -144,6 +176,7 @@ class CardSerializationTest extends TestCase
     public function serialized_cards_with_invalid_value_cannot_be_unserialized_to_cards()
     {
         $serialized = [
+            'id' => 'card-uuid',
             'suite' => 'hearts',
             'value' => 19,
         ];
