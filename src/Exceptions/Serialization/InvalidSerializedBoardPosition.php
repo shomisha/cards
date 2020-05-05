@@ -32,9 +32,4 @@ class InvalidSerializedBoardPosition extends SerializationException
     {
         return self::keyNotType('cards', 'array');
     }
-
-    public static function invalidJson(): self
-    {
-        return new self("The serialized value is an invalid JSON.");
-    }
 }

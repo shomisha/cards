@@ -230,7 +230,6 @@ class BoardPositionSerializationTest extends TestCase
 
         $serializer = $this->getJsonSerializer();
         $serialized = $serializer->serialize($boardPosition);
-        var_dump($serialized);
 
 
         $this->assertJson($serialized);
