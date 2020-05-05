@@ -16,7 +16,7 @@ class Player implements PlayerContract
     /** @var Hand */
     protected $hand;
 
-    public function __construct(string $name, Hand $hand = null)
+    public function __construct(string $name = null, Hand $hand = null)
     {
         $this->name = $name;
         $this->hand = $hand;
