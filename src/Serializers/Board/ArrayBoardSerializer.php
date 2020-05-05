@@ -32,7 +32,7 @@ class ArrayBoardSerializer implements BoardSerializer
         return [
             'id' => $id,
             'type' => $type,
-            'positions' => $position,
+            'positions' => $positions,
         ];
     }
 
