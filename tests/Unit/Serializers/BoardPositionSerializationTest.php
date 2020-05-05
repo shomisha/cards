@@ -230,6 +230,7 @@ class BoardPositionSerializationTest extends TestCase
 
         $serializer = $this->getJsonSerializer();
         $serialized = $serializer->serialize($boardPosition);
+        var_dump($serialized);
 
 
         $this->assertJson($serialized);
@@ -250,12 +251,47 @@ class BoardPositionSerializationTest extends TestCase
     /** @test */
     public function board_position_can_be_unserialized_from_json()
     {
+        $json = '{
+            "id":"board-position-uuid",
+            "type":"Shomisha\\\\Cards\\\\Game\\\\BoardPositions\\\\CardBoardPosition",
+            "cards":[
+                {
+                    "id":"card-uuid",
+                    "suite":"joker",
+                    "value":"15"
+                }
+            ]}';
 
+
+        $jsonSerializer = $this->getJsonSerializer();
+        $actualBoardPosition = $jsonSerializer->unserialize($json);
+
+
+        $this->assertInstanceOf(CardBoardPosition::class, $actualBoardPosition);
+        $this->assertEquals('board-position-uuid', $actualBoardPosition->getId());
+
+        $boardPositionCard = $actualBoardPosition->peek();
+        $this->assertEquals('joker', $boardPositionCard->identifier());
+        $this->assertEquals('card-uuid', $boardPositionCard->getId());
     }
 
     /** @test */
     public function invalid_json_cannot_be_unserialized_to_board_position()
     {
+        $json = '{
+            "id":"board-position-uuid",
+            "type":"Shomisha\\Cards\\Game\\BoardPositions\\CardBoardPosition",
+            "cards":[
+                {
+                    "id":"card-uuid",
+                    "suite":"joker"
+                    "value":"15",
+                }
+            ]}';
+        $this->expectException(InvalidSerializedBoardPosition::class);
 
+
+        $serializer = $this->getJsonSerializer();
+        $serializer->unserialize($json);
     }
 }
