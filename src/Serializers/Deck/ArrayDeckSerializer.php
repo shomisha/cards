@@ -59,7 +59,7 @@ class ArrayDeckSerializer implements DeckSerializerContract
         }
 
         if (!is_string($serialized['id'])) {
-            throw InvalidSerializedDeck::idNotKey();
+            throw InvalidSerializedDeck::idNotString();
         }
 
         if (!array_key_exists('cards', $serialized)) {
