@@ -38,9 +38,13 @@ abstract class Move implements MoveContract
 
     protected function createEffects(array $effectClasses)
     {
+        $effects = [];
+
         foreach ($effectClasses as $effectClass) {
-            return new $effectClass($this);
+            $effects[] = new $effectClass($this);
         }
+
+        return $effects;
     }
 
     protected function requestGameEnd(string $message = null)
