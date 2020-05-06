@@ -5,6 +5,7 @@ namespace Shomisha\Cards\Tests\Unit\Game;
 use PHPUnit\Framework\TestCase;
 use Shomisha\Cards\Exceptions\EndGameException;
 use Shomisha\Cards\Game\Move;
+use Shomisha\Cards\Tests\Fakes\FakeMoveEffect;
 use Shomisha\Cards\Tests\Traits\OverridesProtectedAccess;
 
 class MoveTest extends TestCase
@@ -52,6 +53,34 @@ class MoveTest extends TestCase
         $this->assertEquals($expectedHasEffects, $actualHasEffects);
     }
 
+    /** @test */
+    public function move_can_return_pre_application_effects()
+    {
+        $move = $this->getMoveWithEffects(['pre' => [FakeMoveEffect::class]]);
+
+
+        $effects = $move->getPreApplicationEffects();
+
+
+        $this->assertCount(1, $effects);
+        $this->assertInstanceOf(FakeMoveEffect::class, $effects[0]);
+    }
+
+    /** @test */
+    public function move_will_not_mix_pre_and_post_application_effects()
+    {
+        $move = $this->getMoveWithEffects([
+            'pre' => [FakeMoveEffect::class],
+            'post' => [FakeMoveEffect::class, FakeMoveEffect::class],
+        ]);
+
+
+        $effects = $move->getPreApplicationEffects();
+
+
+        $this->assertCount(1, $effects);
+    }
+
     /**
     * @test
     * @testWith [true]
@@ -71,6 +100,19 @@ class MoveTest extends TestCase
 
 
         $this->assertEquals($expectedHasEffects, $actualHasEffects);
+    }
+
+    /** @test */
+    public function move_can_return_post_application_effects()
+    {
+        $move = $this->getMoveWithEffects(['post' => [FakeMoveEffect::class]]);
+
+
+        $effects = $move->getPostApplicationEffects();
+
+
+        $this->assertCount(1, $effects);
+        $this->assertInstanceOf(FakeMoveEffect::class, $effects[0]);
     }
 
     /** @test */
